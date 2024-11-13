@@ -4,6 +4,7 @@ go 1.23
 
 require (
 	github.com/stretchr/testify v1.9.0
+	github.com/usalko/hexsi v0.1.2
 	github.com/usalko/hexsi/internal v0.1.2
 )
 
@@ -13,4 +14,7 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
-replace githib.com/usalko/hexsi/internal => ../internal
+replace (
+	github.com/usalko/hexsi => ../
+	github.com/usalko/hexsi/internal => ../internal
+)

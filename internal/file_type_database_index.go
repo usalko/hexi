@@ -5,7 +5,15 @@ import (
 	"slices"
 )
 
-var lookupTable map[[8]byte][]FileType = map[[8]byte][]FileType{}
+var lookupTableZeroOffset map[[8]byte][]FileType = map[[8]byte][]FileType{}
+
+func updateLookupTableZeroOffset(key [8]byte, fileType FileType) {
+	fileTypes, ok := lookupTableZeroOffset[key]
+	if !ok {
+		lookupTableZeroOffset[key] = make([]FileType, 0)
+	}
+	lookupTableZeroOffset[key] = append(fileTypes, fileType)
+}
 
 func lookupTableKeys[S BytesPattern, O OffsetPattern, E NameExtensionPattern](hexSignature HexSignature[S, O, E]) [][8]byte {
 	result := [][8]byte{}
@@ -20,26 +28,29 @@ func lookupTableKeys[S BytesPattern, O OffsetPattern, E NameExtensionPattern](he
 	return result
 }
 
-func updateLookupTable[S BytesPattern, O OffsetPattern, E NameExtensionPattern](knownSignatures map[FileType]HexSignature[S, O, E]) {
+func updateLookupTables[S BytesPattern, O OffsetPattern, E NameExtensionPattern](knownSignatures map[FileType]HexSignature[S, O, E]) {
 	for fileType, hexSignature := range knownSignatures {
 		for _, key := range lookupTableKeys(hexSignature) {
-			fileTypes, ok := lookupTable[key]
-			if !ok {
-				lookupTable[key] = make([]FileType, 0)
+
+			switch offset := hexSignature.Offset; any(offset).(type) {
+			case uint64:
+				if any(offset).(uint64) == 0 {
+					updateLookupTableZeroOffset(key, fileType)
+				}
 			}
-			lookupTable[key] = append(fileTypes, fileType)
 		}
 	}
 }
 
 func init() {
-	updateLookupTable(knownSignatures1)
-	updateLookupTable(knownSignatures2)
-	updateLookupTable(knownSignatures3)
+	updateLookupTables(knownSignatures1)
+	updateLookupTables(knownSignatures2)
+	updateLookupTables(knownSignatures3)
+	updateLookupTables(knownSignatures5)
 }
 
 func LookupSignatureByBytes1(header []byte) (*HexSignature[[]byte, uint64, string], error) {
-	fileTypes, ok := lookupTable[[8]byte(slices.Grow(slices.Clone(header), 8)[:8])]
+	fileTypes, ok := lookupTableZeroOffset[[8]byte(slices.Grow(slices.Clone(header), 8)[:8])]
 	if ok && len(fileTypes) == 1 {
 		hexSignature, ok := knownSignatures1[fileTypes[0]]
 		if ok {
@@ -50,7 +61,7 @@ func LookupSignatureByBytes1(header []byte) (*HexSignature[[]byte, uint64, strin
 }
 
 func LookupSignatureByBytes2(header []byte) (*HexSignature[[]byte, uint64, []string], error) {
-	fileTypes, ok := lookupTable[[8]byte(slices.Grow(slices.Clone(header), 8)[:8])]
+	fileTypes, ok := lookupTableZeroOffset[[8]byte(slices.Grow(slices.Clone(header), 8)[:8])]
 	if ok && len(fileTypes) == 1 {
 		hexSignature, ok := knownSignatures2[fileTypes[0]]
 		if ok {
@@ -61,9 +72,20 @@ func LookupSignatureByBytes2(header []byte) (*HexSignature[[]byte, uint64, []str
 }
 
 func LookupSignatureByBytes3(header []byte) (*HexSignature[OneOfByteSequences, uint64, string], error) {
-	fileTypes, ok := lookupTable[[8]byte(slices.Grow(slices.Clone(header), 8)[:8])]
+	fileTypes, ok := lookupTableZeroOffset[[8]byte(slices.Grow(slices.Clone(header), 8)[:8])]
 	if ok && len(fileTypes) == 1 {
 		hexSignature, ok := knownSignatures3[fileTypes[0]]
+		if ok {
+			return &hexSignature, nil
+		}
+	}
+	return nil, fmt.Errorf("unknown signature")
+}
+
+func LookupSignatureByBytes5(header []byte) (*HexSignature[[]byte, uint64, []string], error) {
+	fileTypes, ok := lookupTableZeroOffset[[8]byte(slices.Grow(slices.Clone(header), 8)[:8])]
+	if ok && len(fileTypes) == 1 {
+		hexSignature, ok := knownSignatures5[fileTypes[0]]
 		if ok {
 			return &hexSignature, nil
 		}
