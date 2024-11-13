@@ -33,9 +33,17 @@ func wikiBytes(bytesString string) []byte {
 }
 
 func DetectFileType(header []byte) (*internal.FileType, error) {
-	hexSignature, _ := internal.LookupSignatureByBytes1(header)
-	if hexSignature != nil {
-		return &hexSignature.Tag, nil
+	hexSignature1, _ := internal.LookupSignatureByBytes1(header)
+	if hexSignature1 != nil {
+		return &hexSignature1.Tag, nil
+	}
+	hexSignature2, _ := internal.LookupSignatureByBytes2(header)
+	if hexSignature2 != nil {
+		return &hexSignature2.Tag, nil
+	}
+	hexSignature3, _ := internal.LookupSignatureByBytes3(header)
+	if hexSignature3 != nil {
+		return &hexSignature3.Tag, nil
 	}
 	return nil, fmt.Errorf("unknown file type")
 }

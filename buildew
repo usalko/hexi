@@ -50,7 +50,10 @@ fi
 # =============================================================================
 
 if [ "$COMMAND" == "tests" ] || [ "$COMMAND" == "test" ]; then
-    go test ./tests
+    CD=$PWD
+    cd ./tests || exit
+    go test
+    cd $CD || exit
 fi
 
 if [ "$COMMAND" == "version" ]; then

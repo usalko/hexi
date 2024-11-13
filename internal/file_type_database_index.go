@@ -46,5 +46,27 @@ func LookupSignatureByBytes1(header []byte) (*HexSignature[[]byte, uint64, strin
 			return &hexSignature, nil
 		}
 	}
-	return nil, fmt.Errorf("unknow signature")
+	return nil, fmt.Errorf("unknown signature")
+}
+
+func LookupSignatureByBytes2(header []byte) (*HexSignature[[]byte, uint64, []string], error) {
+	fileTypes, ok := lookupTable[[8]byte(slices.Grow(slices.Clone(header), 8)[:8])]
+	if ok && len(fileTypes) == 1 {
+		hexSignature, ok := knownSignatures2[fileTypes[0]]
+		if ok {
+			return &hexSignature, nil
+		}
+	}
+	return nil, fmt.Errorf("unknown signature")
+}
+
+func LookupSignatureByBytes3(header []byte) (*HexSignature[OneOfByteSequences, uint64, string], error) {
+	fileTypes, ok := lookupTable[[8]byte(slices.Grow(slices.Clone(header), 8)[:8])]
+	if ok && len(fileTypes) == 1 {
+		hexSignature, ok := knownSignatures3[fileTypes[0]]
+		if ok {
+			return &hexSignature, nil
+		}
+	}
+	return nil, fmt.Errorf("unknown signature")
 }
