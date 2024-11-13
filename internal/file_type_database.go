@@ -28,6 +28,19 @@ const (
 	PALM_DSK_CALENDAR2 FileType = 21 //Palm Desktop Calendar Archive
 	TELEGRAM_DSK       FileType = 22 //Telegram Desktop File
 	TELEGRAM_DSK_ENC   FileType = 23 //Telegram Desktop Encrypted File
+	PALM_DSK_DATA      FileType = 24 //Palm Desktop Data File (Access format)
+	ICON               FileType = 25 //Computer icon encoded in ICO file format
+	APPLE_ICON_FORMAT  FileType = 26 //Apple Icon Image format
+	THREE_GPP          FileType = 27 //3rd Generation Partnership Project 3GPP and 3GPP2 multimedia files
+	HEIC               FileType = 28 //High Efficiency Image Container (HEIC)
+	Z_LZW              FileType = 29 //compressed file (often tar zip) using Lempel-Ziv-Welch algorithm
+	Z_LZH              FileType = 30 //Compressed file (often tar zip) using LZH algorithm
+	LZH0               FileType = 31 // 2D 68 6C 30 2D	2	lzh	Lempel Ziv Huffman archive file Method 0 (No compression)
+	LZH5               FileType = 32 // 2D 68 6C 35 2D	2	lzh	Lempel Ziv Huffman archive file Method 5 (8 KiB sliding window)
+	AMI_BACK           FileType = 33 // 42 41 43 4B 4D 49 4B 45 44 49 53 4B	0	bac AmiBack Amiga Backup data file
+	AMI_BACK_IDX       FileType = 34 // 49 4E 44 58	0 idx	AmiBack Amiga Backup index file
+	BPLIST             FileType = 35 // 62 70 6C 69 73 74	0	plist	Binary Property List file
+	BZ2                FileType = 36 // 42 5A 68	0	bz2	Compressed file using Bzip2 algorithm
 )
 
 type AnyBytesInMiddle struct {
@@ -183,6 +196,76 @@ var knownSignatures1 = map[FileType]HexSignature[[]byte, uint64, string]{
 		Description:   "Telegram Desktop Encrypted File",
 		Tag:           TELEGRAM_DSK_ENC,
 	},
+	PALM_DSK_DATA: {
+		Bytes:         []byte{0x00, 0x01, 0x00, 0x00},
+		Offset:        0,
+		NameExtension: "",
+		Description:   "Palm Desktop Data File (Access format",
+		Tag:           PALM_DSK_DATA,
+	},
+	ICON: {
+		Bytes:         []byte{0x00, 0x00, 0x01, 0x00},
+		Offset:        0,
+		NameExtension: "ico",
+		Description:   "Computer icon encoded in ICO file format",
+		Tag:           ICON,
+	},
+	APPLE_ICON_FORMAT: {
+		Bytes:         []byte{0x69, 0x63, 0x6e, 0x73},
+		Offset:        0,
+		NameExtension: "icns",
+		Description:   "Apple Icon Image format",
+		Tag:           APPLE_ICON_FORMAT,
+	},
+	HEIC: {
+		Bytes:         []byte{0x66, 0x74, 0x79, 0x70, 0x68, 0x65, 0x69, 0x63, 0x66, 0x74, 0x79, 0x70, 0x6d},
+		Offset:        4,
+		NameExtension: "heic",
+		Description:   "High Efficiency Image Container (HEIC)",
+		Tag:           HEIC,
+	},
+	LZH0: {
+		Bytes:         []byte{0x2D, 0x68, 0x6C, 0x30, 0x2D},
+		Offset:        2,
+		NameExtension: "lzh",
+		Description:   "Lempel Ziv Huffman archive file Method 0 (No compression)",
+		Tag:           LZH0,
+	},
+	LZH5: {
+		Bytes:         []byte{0x2D, 0x68, 0x6C, 0x35, 0x2D},
+		Offset:        2,
+		NameExtension: "lzh",
+		Description:   "Lempel Ziv Huffman archive file Method 5 (8 KiB sliding window)",
+		Tag:           LZH5,
+	},
+	AMI_BACK: {
+		Bytes:         []byte{0x42, 0x41, 0x43, 0x4B, 0x4D, 0x49, 0x4B, 0x45, 0x44, 0x49, 0x53, 0x4B},
+		Offset:        0,
+		NameExtension: "bac",
+		Description:   "AmiBack Amiga Backup data file",
+		Tag:           AMI_BACK,
+	},
+	AMI_BACK_IDX: {
+		Bytes:         []byte{0x49, 0x4E, 0x44, 0x58},
+		Offset:        0,
+		NameExtension: "idx",
+		Description:   "AmiBack Amiga Backup index file",
+		Tag:           AMI_BACK_IDX,
+	},
+	BPLIST: {
+		Bytes:         []byte{0x62, 0x70, 0x6C, 0x69, 0x73, 0x74},
+		Offset:        0,
+		NameExtension: "plist",
+		Description:   "Binary Property List file",
+		Tag:           BPLIST,
+	},
+	BZ2: {
+		Bytes:         []byte{0x42, 0x5A, 0x68},
+		Offset:        0,
+		NameExtension: "bz2",
+		Description:   "Compressed file using Bzip2 algorithm",
+		Tag:           BZ2,
+	},
 }
 
 var knownSignatures2 = map[FileType]HexSignature[[]byte, uint64, []string]{
@@ -199,6 +282,27 @@ var knownSignatures2 = map[FileType]HexSignature[[]byte, uint64, []string]{
 		NameExtension: []string{"sqlitedb", "sqlite", "db"},
 		Description:   "SQLite Database",
 		Tag:           SQLITE3,
+	},
+	THREE_GPP: {
+		Bytes:         []byte{0x66, 0x74, 0x79, 0x70, 0x33, 0x67},
+		Offset:        4,
+		NameExtension: []string{"3gp", "3g2"},
+		Description:   "3rd Generation Partnership Project 3GPP and 3GPP2 multimedia files",
+		Tag:           THREE_GPP,
+	},
+	Z_LZW: {
+		Bytes:         []byte{0x1F, 0x9D},
+		Offset:        0,
+		NameExtension: []string{"z", "tar.z"},
+		Description:   "compressed file (often tar zip) using Lempel-Ziv-Welch algorithm",
+		Tag:           Z_LZW,
+	},
+	Z_LZH: {
+		Bytes:         []byte{0x1F, 0xA0},
+		Offset:        0,
+		NameExtension: []string{"z", "tar.z"},
+		Description:   "Compressed file (often tar zip) using LZH algorithm",
+		Tag:           Z_LZH,
 	},
 }
 

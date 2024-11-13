@@ -214,3 +214,94 @@ func TestLookupTelegramDesktopEncrypted(t *testing.T) {
 
 	assert.Equal(t, *fileType, internal.TELEGRAM_DSK_ENC)
 }
+
+func TestLookupPalmDesktopData(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("00 01 00 00"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.PALM_DSK_DATA)
+}
+
+func TestLookupIcon(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("00 00 01 00"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.ICON)
+}
+
+func TestLookupAppleIconFormat(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("69 63 6e 73"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.APPLE_ICON_FORMAT)
+}
+
+// func TestLookupTreeGpp(t *testing.T) {
+// 	fileType, err := hexsi.DetectFileType(wikiBytes("66 74 79 70 33 67"))
+// 	check(err)
+
+// 	assert.Equal(t, *fileType, internal.THREE_GPP)
+// }
+
+// func TestLookupHeic(t *testing.T) {
+// 	fileType, err := hexsi.DetectFileType(wikiBytes("66 74 79 70 68 65 69 63 66 74 79 70 6d"))
+// 	check(err)
+
+// 	assert.Equal(t, *fileType, internal.HEIC)
+// }
+
+func TestLookupZlzw(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("1F 9D"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.Z_LZW)
+}
+
+func TestLookupZlzh(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("1F A0"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.Z_LZH)
+}
+
+// func TestLookupLzh0(t *testing.T) {
+// 	fileType, err := hexsi.DetectFileType(wikiBytes("2D 68 6C 30 2D"))
+// 	check(err)
+
+// 	assert.Equal(t, *fileType, internal.LZH0)
+// }
+
+// func TestLookupLzh5(t *testing.T) {
+// 	fileType, err := hexsi.DetectFileType(wikiBytes("2D 68 6C 35 2D"))
+// 	check(err)
+
+// 	assert.Equal(t, *fileType, internal.LZH5)
+// }
+
+func TestLookupAmiBack(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("42 41 43 4B 4D 49 4B 45 44 49 53 4B"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.AMI_BACK)
+}
+
+func TestLookupAmiBackIdx(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("49 4E 44 58"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.AMI_BACK_IDX)
+}
+
+func TestLookupBplist(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("62 70 6C 69 73 74"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.BPLIST)
+}
+
+func TestLookupBz2(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("42 5A 68"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.BZ2)
+}
