@@ -35,12 +35,12 @@ const (
 	HEIC               FileType = 28 //High Efficiency Image Container (HEIC)
 	Z_LZW              FileType = 29 //compressed file (often tar zip) using Lempel-Ziv-Welch algorithm
 	Z_LZH              FileType = 30 //Compressed file (often tar zip) using LZH algorithm
-	LZH0               FileType = 31 // 2D 68 6C 30 2D	2	lzh	Lempel Ziv Huffman archive file Method 0 (No compression)
-	LZH5               FileType = 32 // 2D 68 6C 35 2D	2	lzh	Lempel Ziv Huffman archive file Method 5 (8 KiB sliding window)
-	AMI_BACK           FileType = 33 // 42 41 43 4B 4D 49 4B 45 44 49 53 4B	0	bac AmiBack Amiga Backup data file
-	AMI_BACK_IDX       FileType = 34 // 49 4E 44 58	0 idx	AmiBack Amiga Backup index file
-	BPLIST             FileType = 35 // 62 70 6C 69 73 74	0	plist	Binary Property List file
-	BZ2                FileType = 36 // 42 5A 68	0	bz2	Compressed file using Bzip2 algorithm
+	LZH0               FileType = 31 //Lempel Ziv Huffman archive file Method 0 (No compression)
+	LZH5               FileType = 32 //Lempel Ziv Huffman archive file Method 5 (8 KiB sliding window)
+	AMI_BACK           FileType = 33 //AmiBack Amiga Backup data file
+	AMI_BACK_IDX       FileType = 34 //AmiBack Amiga Backup index file
+	BPLIST             FileType = 35 //Binary Property List file
+	BZ2                FileType = 36 //Compressed file using Bzip2 algorithm
 )
 
 type AnyBytesInMiddle struct {
