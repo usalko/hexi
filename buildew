@@ -49,8 +49,8 @@ fi
 
 # =============================================================================
 
-if [ "$COMMAND" == "test" ]; then
-    go test fluent
+if [ "$COMMAND" == "tests" ] || [ "$COMMAND" == "test" ]; then
+    go test ./tests
 fi
 
 if [ "$COMMAND" == "version" ]; then
@@ -92,5 +92,5 @@ fi
 
 # =================================================================================================
 
-AVAILABLE_COMMANDS="test version gen"
+AVAILABLE_COMMANDS="test tests version gen"
 [[ $AVAILABLE_COMMANDS =~ (^| )$COMMAND($| ) ]] && echo 'Ok' || (echo 'Unknown command: ' "$COMMAND" && echo 'Available commands are: ' "$AVAILABLE_COMMANDS")

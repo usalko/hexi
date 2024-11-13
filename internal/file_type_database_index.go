@@ -7,23 +7,35 @@ import (
 
 var lookupTable map[[8]byte][]FileType = map[[8]byte][]FileType{}
 
-func lookupTableKey[S BytesPattern, O OffsetPattern, E NameExtensionPattern](hexSignature HexSignature[S, O, E]) [8]byte {
+func lookupTableKeys[S BytesPattern, O OffsetPattern, E NameExtensionPattern](hexSignature HexSignature[S, O, E]) [][8]byte {
+	result := [][8]byte{}
 	switch value := any(hexSignature.Bytes); value.(type) {
 	case []byte:
-		return [8]byte(slices.Grow(value.([]byte), 8)[:8])
+		result = append(result, [8]byte(slices.Grow(value.([]byte), 8)[:8]))
+	case OneOfByteSequences:
+		for _, sequence := range value.(OneOfByteSequences) {
+			result = append(result, [8]byte(slices.Grow(sequence, 8)[:8]))
+		}
 	}
-	return [8]byte{}
+	return result
+}
+
+func updateLookupTable[S BytesPattern, O OffsetPattern, E NameExtensionPattern](knownSignatures map[FileType]HexSignature[S, O, E]) {
+	for fileType, hexSignature := range knownSignatures {
+		for _, key := range lookupTableKeys(hexSignature) {
+			fileTypes, ok := lookupTable[key]
+			if !ok {
+				lookupTable[key] = make([]FileType, 0)
+			}
+			lookupTable[key] = append(fileTypes, fileType)
+		}
+	}
 }
 
 func init() {
-	for fileType, hexSignature := range knownSignatures1 {
-		key := lookupTableKey(hexSignature)
-		fileTypes, ok := lookupTable[key]
-		if !ok {
-			lookupTable[key] = make([]FileType, 0)
-		}
-		lookupTable[key] = append(fileTypes, fileType)
-	}
+	updateLookupTable(knownSignatures1)
+	updateLookupTable(knownSignatures2)
+	updateLookupTable(knownSignatures3)
 }
 
 func LookupSignatureByBytes1(header []byte) (*HexSignature[[]byte, uint64, string], error) {
