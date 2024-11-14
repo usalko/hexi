@@ -35,5 +35,13 @@ func DetectFileType(header []byte) (*internal.FileType, error) {
 	if hexSignature7 != nil {
 		return &hexSignature7.Tag, nil
 	}
+	hexSignature8, _ := internal.LookupSignatureByBytes8(header)
+	if hexSignature8 != nil {
+		return &hexSignature8.Tag, nil
+	}
+	hexSignature9, _ := internal.LookupSignatureByBytes9(header)
+	if hexSignature9 != nil {
+		return &hexSignature7.Tag, nil
+	}
 	return nil, fmt.Errorf("unknown file type")
 }

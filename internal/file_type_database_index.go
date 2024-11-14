@@ -2,6 +2,7 @@ package internal
 
 import (
 	"fmt"
+	"regexp"
 	"slices"
 )
 
@@ -50,6 +51,8 @@ func init() {
 	updateLookupTables(knownSignatures5)
 	updateLookupTables(knownSignatures6)
 	updateLookupTables(knownSignatures7)
+	updateLookupTables(knownSignatures8)
+	updateLookupTables(knownSignatures9)
 }
 
 func LookupSignatureByBytes1(header []byte) (*HexSignature[[]byte, uint64, string], error) {
@@ -118,10 +121,32 @@ func LookupSignatureByBytes6(header []byte) (*HexSignature[AnyBytesInMiddle, Off
 	return nil, fmt.Errorf("unknown signature")
 }
 
-func LookupSignatureByBytes7(header []byte) (*HexSignature[[]byte, uint64, []string], error) {
+func LookupSignatureByBytes7(header []byte) (*HexSignature[[]byte, PowerOffset, []string], error) {
 	fileTypes, ok := lookupTableZeroOffset[[8]byte(slices.Grow(slices.Clone(header), 8)[:8])]
 	if ok && len(fileTypes) == 1 {
 		hexSignature, ok := knownSignatures7[fileTypes[0]]
+		if ok {
+			return &hexSignature, nil
+		}
+	}
+	return nil, fmt.Errorf("unknown signature")
+}
+
+func LookupSignatureByBytes8(header []byte) (*HexSignature[[]byte, uint64, *regexp.Regexp], error) {
+	fileTypes, ok := lookupTableZeroOffset[[8]byte(slices.Grow(slices.Clone(header), 8)[:8])]
+	if ok && len(fileTypes) == 1 {
+		hexSignature, ok := knownSignatures8[fileTypes[0]]
+		if ok {
+			return &hexSignature, nil
+		}
+	}
+	return nil, fmt.Errorf("unknown signature")
+}
+
+func LookupSignatureByBytes9(header []byte) (*HexSignature[[]byte, uint64, []string], error) {
+	fileTypes, ok := lookupTableZeroOffset[[8]byte(slices.Grow(slices.Clone(header), 8)[:8])]
+	if ok && len(fileTypes) == 1 {
+		hexSignature, ok := knownSignatures9[fileTypes[0]]
 		if ok {
 			return &hexSignature, nil
 		}

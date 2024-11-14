@@ -69,6 +69,20 @@ const (
 	IIF_AMIGA_FVM        FileType = 62 //Amiga Fantavision Movie
 	IIF_AIFF             FileType = 63 //Audio Interchange File Format
 	LZ                   FileType = 64 //lzip compressed file
+	CPIO                 FileType = 65 //cpio archive file
+	DOS_MZ               FileType = 66 //DOS MZ executable and its descendants (including NE and PE)
+	SMART_SNIFF          FileType = 67 //SmartSniff Packets File
+	DOS_ZM               FileType = 68 //DOS ZM executable and its descendants (rare)
+	ZIP                  FileType = 69 //zip file format and formats based on it, such as EPUB, JAR, ODF, OOXML
+	RAR_V1               FileType = 70 //Roshal ARchive compressed archive v1.50 onwards
+	RAR_V5               FileType = 71 //Roshal ARchive compressed archive v5.00 onwards
+	ELF                  FileType = 72 //Executable and Linkable Format
+	PNG                  FileType = 73 //Image encoded in the Portable Network Graphics format
+	HDF4                 FileType = 75 //Data stored in version 4 of the Hierarchical Data Format
+	HDF5                 FileType = 76 //Data stored in version 5 of the Hierarchical Data Format
+	COM                  FileType = 77 //CP/M 3 and higher with overlays
+	JAVA_CLASS           FileType = 78 //Java class file, Mach-O Fat Binary
+	UTF8_TXT             FileType = 79 //UTF-8 byte order mark, commonly seen in text files
 )
 
 type AnyBytesInMiddle struct {
@@ -90,15 +104,20 @@ type BytesPattern interface {
 type OffsetFromEof uint64
 type OffsetAny bool
 type OffsetMultiply []uint64
+type PowerOffset struct {
+	Initial uint64
+	Base    uint32
+	Factor  int8
+}
 
 const OFFSET_ANY OffsetAny = true
 
 type OffsetPattern interface {
-	uint64 | OffsetFromEof | OffsetAny | OffsetMultiply
+	uint64 | OffsetFromEof | OffsetAny | OffsetMultiply | PowerOffset
 }
 
 type NameExtensionPattern interface {
-	string | []string | regexp.Regexp
+	string | []string | *regexp.Regexp
 }
 
 type HexSignature[S BytesPattern, O OffsetPattern, E NameExtensionPattern] struct {
@@ -369,6 +388,62 @@ var knownSignatures1 = map[FileType]HexSignature[[]byte, uint64, string]{
 		Description:   "lzip compressed file",
 		Tag:           LZ,
 	},
+	CPIO: {
+		Bytes:         []byte{0x30, 0x37, 0x30, 0x37, 0x30, 0x37},
+		Offset:        0,
+		NameExtension: "cpio",
+		Description:   "cpio archive file",
+		Tag:           CPIO,
+	},
+	SMART_SNIFF: {
+		Bytes:         []byte{0x53, 0x4D, 0x53, 0x4E, 0x46, 0x32, 0x30, 0x30},
+		Offset:        0,
+		NameExtension: "spp",
+		Description:   "SmartSniff Packets File",
+		Tag:           SMART_SNIFF,
+	},
+	DOS_ZM: {
+		Bytes:         []byte{0x5A, 0x4D},
+		Offset:        0,
+		NameExtension: "exe",
+		Description:   "DOS ZM executable and its descendants (rare)",
+		Tag:           DOS_ZM,
+	},
+	RAR_V1: {
+		Bytes:         []byte{0x52, 0x61, 0x72, 0x21, 0x1A, 0x07, 0x00},
+		Offset:        0,
+		NameExtension: "rar",
+		Description:   "Roshal ARchive compressed archive v1.50 onwards",
+		Tag:           RAR_V1,
+	},
+	RAR_V5: {
+		Bytes:         []byte{0x52, 0x61, 0x72, 0x21, 0x1A, 0x07, 0x01, 0x00},
+		Offset:        0,
+		NameExtension: "rar",
+		Description:   "Roshal ARchive compressed archive v5.00 onwards",
+		Tag:           RAR_V5,
+	},
+	PNG: {
+		Bytes:         []byte{0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A},
+		Offset:        0,
+		NameExtension: "png",
+		Description:   "Image encoded in the Portable Network Graphics format",
+		Tag:           PNG,
+	},
+	COM: {
+		Bytes:         []byte{0xC9},
+		Offset:        0,
+		NameExtension: "com",
+		Description:   "CP/M 3 and higher with overlays",
+		Tag:           COM,
+	},
+	JAVA_CLASS: {
+		Bytes:         []byte{0xCA, 0xFE, 0xBA, 0xBE},
+		Offset:        0,
+		NameExtension: "class",
+		Description:   "Java class file, Mach-O Fat Binary",
+		Tag:           JAVA_CLASS,
+	},
 }
 
 var knownSignatures2 = map[FileType]HexSignature[[]byte, uint64, []string]{
@@ -406,6 +481,27 @@ var knownSignatures2 = map[FileType]HexSignature[[]byte, uint64, []string]{
 		NameExtension: []string{"z", "tar.z"},
 		Description:   "Compressed file (often tar zip) using LZH algorithm",
 		Tag:           Z_LZH,
+	},
+	DOS_MZ: {
+		Bytes:         []byte{0x4D, 0x5A},
+		Offset:        0,
+		NameExtension: []string{"exe", "dll", "mui", "sys", "scr", "cpl", "ocx", "ax", "iec", "ime", "rs", "tsp", "fon", "efi"},
+		Description:   "DOS MZ executable and its descendants (including NE and PE",
+		Tag:           DOS_MZ,
+	},
+	ELF: {
+		Bytes:         []byte{0x7F, 0x45, 0x4C, 0x46},
+		Offset:        0,
+		NameExtension: []string{"", "axf", "bin", "elf", "o", "out", "prx", "puff", "ko", "mod", "so"},
+		Description:   "Executable and Linkable Format",
+		Tag:           ELF,
+	},
+	HDF4: {
+		Bytes:         []byte{0x0E, 0x03, 0x13, 0x01},
+		Offset:        0,
+		NameExtension: []string{"hdf4", "h4"},
+		Description:   "Data stored in version 4 of the Hierarchical Data Format",
+		Tag:           HDF4,
 	},
 }
 
@@ -504,6 +600,17 @@ var knownSignatures4 = map[FileType]HexSignature[OneOfByteSequences, uint64, []s
 		NameExtension: []string{"jp2", "j2k", "jpf", "jpm", "jpg2", "j2c", "jpc", "jpx", "mj2"},
 		Description:   "JPEG 2000 format",
 		Tag:           JPEG_2000,
+	},
+	ZIP: {
+		Bytes: [][]byte{
+			{0x50, 0x4B, 0x03, 0x04},
+			{0x50, 0x4B, 0x05, 0x06},
+			{0x50, 0x4B, 0x07, 0x08},
+		},
+		Offset:        0,
+		NameExtension: []string{"zip", "aar", "apk", "docx", "epub", "ipa", "jar", "kmz", "maff", "msix", "odp", "ods", "odt", "pk3", "pk4", "pptx", "usdz", "vsdx", "xlsx", "xpi"},
+		Description:   "zip file format and formats based on it, such as EPUB, JAR, ODF, OOXML",
+		Tag:           ZIP,
 	},
 }
 
@@ -669,7 +776,31 @@ var knownSignatures6 = map[FileType]HexSignature[AnyBytesInMiddle, OffsetAny, []
 	},
 }
 
-var knownSignatures7 = map[FileType]HexSignature[[]byte, uint64, []string]{
+var knownSignatures7 = map[FileType]HexSignature[[]byte, PowerOffset, []string]{
+	HDF5: {
+		Bytes: []byte{0x89, 0x48, 0x44, 0x46, 0x0D, 0x0A, 0x1A, 0x0A},
+		Offset: PowerOffset{
+			Initial: 0,
+			Base:    512,
+			Factor:  2,
+		},
+		NameExtension: []string{"hdf5", "h5"},
+		Description:   "Data stored in version 5 of the Hierarchical Data Format",
+		Tag:           HDF5,
+	},
+}
+
+var knownSignatures8 = map[FileType]HexSignature[[]byte, uint64, *regexp.Regexp]{
+	UTF8_TXT: {
+		Bytes:         []byte{0xEF, 0xBB, 0xBF},
+		Offset:        0,
+		NameExtension: regexp.MustCompile("(txt|.*)"),
+		Description:   "UTF-8 byte order mark, commonly seen in text files",
+		Tag:           UTF8_TXT,
+	},
+}
+
+var knownSignatures9 = map[FileType]HexSignature[[]byte, uint64, []string]{
 	ZERO: {
 		Bytes:         []byte{0x00},
 		Offset:        0,
