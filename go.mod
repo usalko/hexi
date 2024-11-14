@@ -2,7 +2,7 @@ module github.com/usalko/hexsi
 
 go 1.23
 
-require github.com/usalko/hexsi/internal v0.1.3
+require github.com/usalko/hexsi/internal v0.1.4
 
 replace (
 	github.com/usalko/hexsi/internal => ./internal
