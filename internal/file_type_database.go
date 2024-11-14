@@ -776,6 +776,7 @@ var knownSignatures6 = map[FileType]HexSignature[AnyBytesInMiddle, OffsetAny, []
 	},
 }
 
+// Signatures with different possible location (search offsets by power law)
 var knownSignatures7 = map[FileType]HexSignature[[]byte, PowerOffset, []string]{
 	HDF5: {
 		Bytes: []byte{0x89, 0x48, 0x44, 0x46, 0x0D, 0x0A, 0x1A, 0x0A},

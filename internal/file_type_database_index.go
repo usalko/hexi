@@ -38,6 +38,10 @@ func updateLookupTables[S BytesPattern, O OffsetPattern, E NameExtensionPattern]
 				if any(offset).(uint64) == 0 {
 					updateLookupTableZeroOffset(key, fileType)
 				}
+			case PowerOffset:
+				if any(offset).(PowerOffset).Initial == 0 {
+					updateLookupTableZeroOffset(key, fileType)
+				}
 			}
 		}
 	}

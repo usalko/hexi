@@ -603,3 +603,117 @@ func TestLookupLz(t *testing.T) {
 	assert.Equal(t, *fileType, internal.LZ)
 
 }
+
+func TestLookupCpio(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("30 37 30 37 30 37"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.CPIO)
+
+}
+
+func TestLookupDosMz(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("4D 5A"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.DOS_MZ)
+
+}
+func TestLookupSmartSniff(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("53 4D 53 4E 46 32 30 30"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.SMART_SNIFF)
+
+}
+func TestLookupDosZm(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("5A 4D"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.DOS_ZM)
+
+}
+func TestLookupZipCase1(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("50 4B 03 04"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.ZIP)
+
+}
+func TestLookupZipCase2(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("50 4B 05 06"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.ZIP)
+
+}
+func TestLookupZipCase3(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("50 4B 07 08"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.ZIP)
+
+}
+func TestLookupRarV1(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("52 61 72 21 1A 07 00"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.RAR_V1)
+
+}
+func TestLookupRarV5(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("52 61 72 21 1A 07 01 00"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.RAR_V5)
+
+}
+func TestLookupElf(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("7F 45 4C 46"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.ELF)
+
+}
+func TestLookupPng(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("89 50 4E 47 0D 0A 1A 0A"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.PNG)
+
+}
+func TestLookupHdf4(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("0E 03 13 01"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.HDF4)
+
+}
+func TestLookupHdf5(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("89 48 44 46 0D 0A 1A 0A"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.HDF5)
+
+}
+func TestLookupCom(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("C9"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.COM)
+
+}
+func TestLookupJavaClass(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("CA FE BA BE"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.JAVA_CLASS)
+
+}
+func TestLookupUtf8Text(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("EF BB BF"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.UTF8_TXT)
+
+}
