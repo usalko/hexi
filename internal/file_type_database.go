@@ -41,6 +41,22 @@ const (
 	AMI_BACK_IDX       FileType = 34 //AmiBack Amiga Backup index file
 	BPLIST             FileType = 35 //Binary Property List file
 	BZ2                FileType = 36 //Compressed file using Bzip2 algorithm
+	GIF                FileType = 37 //Image file encoded in the Graphics Interchange Format (GIF)
+	TIFF               FileType = 38 //Tagged Image File Format (TIFF)
+	BIG_TIFF           FileType = 39 //BigTIFF
+	CANON_RAW_V2       FileType = 40 //Canon RAW Format Version 2 Canon's RAW format is based on TIFF
+	KODAK_CIN          FileType = 41 //Kodak Cineon image
+	RNC_V1             FileType = 42 //Compressed file using Rob Northen Compression (version 1) algorithm
+	RNC_V2             FileType = 43 //Compressed file using Rob Northen Compression (version 2) algorithm
+	NURU_IMAGE         FileType = 44 //nuru ASCII/ANSI image files
+	NURU_PALETTE       FileType = 45 //nup	nuru ASCII/ANSI palette files
+	SMPTE_DPX          FileType = 46 //SMPTE DPX image
+	OPEN_EXR           FileType = 47 //OpenEXR image
+	BPG                FileType = 48 //Better Portable Graphics format
+	JPEG_RAW           FileType = 49 //JPEG raw or in the JFIF or Exif file format
+	JPEG_2000          FileType = 50 //JPEG 2000 format
+	QUI                FileType = 51 //The “Quite OK Image Format”
+	IIF_ILBM           FileType = 52 //IFF Interleaved Bitmap Image
 )
 
 type AnyBytesInMiddle struct {
@@ -50,15 +66,20 @@ type AnyBytesInMiddle struct {
 	Suffix         []byte
 }
 
+type ByteSequence interface {
+	[]byte | AnyBytesInMiddle
+}
 type OneOfByteSequences [][]byte
 
 type BytesPattern interface {
-	[]byte | AnyBytesInMiddle | OneOfByteSequences
+	ByteSequence | OneOfByteSequences
 }
 
 type OffsetFromEof uint64
 type OffsetAny bool
 type OffsetMultiply []uint64
+
+const OFFSET_ANY OffsetAny = true
 
 type OffsetPattern interface {
 	uint64 | OffsetFromEof | OffsetAny | OffsetMultiply
@@ -266,6 +287,69 @@ var knownSignatures1 = map[FileType]HexSignature[[]byte, uint64, string]{
 		Description:   "Compressed file using Bzip2 algorithm",
 		Tag:           BZ2,
 	},
+	CANON_RAW_V2: {
+		Bytes:         []byte{0x49, 0x49, 0x2A, 0x00, 0x10, 0x00, 0x00, 0x00, 0x43, 0x52},
+		Offset:        0,
+		NameExtension: "cr2",
+		Description:   "Canon RAW Format Version 2 Canon's RAW format is based on TIFF",
+		Tag:           CANON_RAW_V2,
+	},
+	KODAK_CIN: {
+		Bytes:         []byte{0x80, 0x2A, 0x5F, 0xD7},
+		Offset:        0,
+		NameExtension: "cin",
+		Description:   "Kodak Cineon image",
+		Tag:           KODAK_CIN,
+	},
+	RNC_V1: {
+		Bytes:         []byte{0x52, 0x4E, 0x43, 0x01},
+		Offset:        0,
+		NameExtension: "",
+		Description:   "Compressed file using Rob Northen Compression (version 1) algorithm",
+		Tag:           RNC_V1,
+	},
+	RNC_V2: {
+		Bytes:         []byte{0x52, 0x4E, 0x43, 0x02},
+		Offset:        0,
+		NameExtension: "",
+		Description:   "Compressed file using Rob Northen Compression (version 2) algorithm",
+		Tag:           RNC_V2,
+	},
+	NURU_IMAGE: {
+		Bytes:         []byte{0x4E, 0x55, 0x52, 0x55, 0x49, 0x4D, 0x47},
+		Offset:        0,
+		NameExtension: "nui",
+		Description:   "nuru ASCII/ANSI image files",
+		Tag:           NURU_IMAGE,
+	},
+	NURU_PALETTE: {
+		Bytes:         []byte{0x4E, 0x55, 0x52, 0x55, 0x50, 0x41, 0x4C},
+		Offset:        0,
+		NameExtension: "nup",
+		Description:   "nuru ASCII/ANSI palette files",
+		Tag:           NURU_PALETTE,
+	},
+	OPEN_EXR: {
+		Bytes:         []byte{0x76, 0x2F, 0x31, 0x01},
+		Offset:        0,
+		NameExtension: "exr",
+		Description:   "OpenEXR image",
+		Tag:           OPEN_EXR,
+	},
+	BPG: {
+		Bytes:         []byte{0x42, 0x50, 0x47, 0xFB},
+		Offset:        0,
+		NameExtension: "bpg",
+		Description:   "Better Portable Graphics format",
+		Tag:           BPG,
+	},
+	QUI: {
+		Bytes:         []byte{0x71, 0x6f, 0x69, 0x66},
+		Offset:        0,
+		NameExtension: "qui",
+		Description:   "QOI - The “Quite OK Image Format”",
+		Tag:           QUI,
+	},
 }
 
 var knownSignatures2 = map[FileType]HexSignature[[]byte, uint64, []string]{
@@ -337,9 +421,110 @@ var knownSignatures3 = map[FileType]HexSignature[OneOfByteSequences, uint64, str
 		Description:   "Libpcap File Format (nanosecond-resolution)",
 		Tag:           LIBPCAP_NS,
 	},
+	GIF: {
+		Bytes: [][]byte{
+			{0x47, 0x49, 0x46, 0x38, 0x37, 0x61},
+			{0x47, 0x49, 0x46, 0x38, 0x39, 0x61},
+		},
+		Offset:        0,
+		NameExtension: "gif",
+		Description:   "Image file encoded in the Graphics Interchange Format (GIF)",
+		Tag:           GIF,
+	},
+	SMPTE_DPX: {
+		Bytes: [][]byte{
+			{0x53, 0x44, 0x50, 0x58},
+			{0x58, 0x50, 0x44, 0x53},
+		},
+		Offset:        0,
+		NameExtension: "dpx",
+		Description:   "SMPTE DPX image",
+		Tag:           SMPTE_DPX,
+	},
 }
 
-var knownSignatures5 = map[FileType]HexSignature[[]byte, uint64, []string]{
+var knownSignatures4 = map[FileType]HexSignature[OneOfByteSequences, uint64, []string]{
+	TIFF: {
+		Bytes: [][]byte{
+			{0x49, 0x49, 0x2A, 0x00},
+			{0x4D, 0x4D, 0x00, 0x2A},
+		},
+		Offset:        0,
+		NameExtension: []string{"tif", "tiff"},
+		Description:   "Tagged Image File Format (TIFF)",
+		Tag:           TIFF,
+	},
+	BIG_TIFF: {
+		Bytes: [][]byte{
+			{0x49, 0x49, 0x2B, 0x00},
+			{0x4D, 0x4D, 0x00, 0x2B},
+		},
+		Offset:        0,
+		NameExtension: []string{"tif", "tiff"},
+		Description:   "BigTIFF",
+		Tag:           BIG_TIFF,
+	},
+	JPEG_RAW: {
+		Bytes: [][]byte{
+			{0xFF, 0xD8, 0xFF, 0xDB},
+			{0xFF, 0xD8, 0xFF, 0xE0, 0x00, 0x10, 0x4A, 0x46, 0x49, 0x46, 0x00, 0x01},
+			{0xFF, 0xD8, 0xFF, 0xEE},
+			// AnyBytesInMiddle {
+			// 	Prefix: []byte{0xFF, 0xD8, 0xFF, 0xE1},
+			// 	AnyBytesOffset: 4,
+			// 	AnyBytesLength: 2,
+			// 	Suffix: []byte{0x45, 0x78, 0x69, 0x66, 0x00, 0x00},
+			// },
+			{0xFF, 0xD8, 0xFF, 0xE0},
+		},
+		Offset:        0,
+		NameExtension: []string{"jpg", "jpeg"},
+		Description:   "JPEG raw or in the JFIF or Exif file format",
+		Tag:           JPEG_RAW,
+	},
+	JPEG_2000: {
+		Bytes: [][]byte{
+			{0x00, 0x00, 0x00, 0x0C, 0x6A, 0x50, 0x20, 0x20, 0x0D, 0x0A, 0x87, 0x0A},
+			{0xFF, 0x4F, 0xFF, 0x51},
+		},
+		Offset:        0,
+		NameExtension: []string{"jp2", "j2k", "jpf", "jpm", "jpg2", "j2c", "jpc", "jpx", "mj2"},
+		Description:   "JPEG 2000 format",
+		Tag:           JPEG_2000,
+	},
+}
+
+var knownSignatures5 = map[FileType]HexSignature[AnyBytesInMiddle, uint64, []string]{
+	JPEG_RAW: {
+		Bytes: AnyBytesInMiddle{
+			Prefix:         []byte{0xFF, 0xD8, 0xFF, 0xE1},
+			AnyBytesOffset: 4,
+			AnyBytesLength: 2,
+			Suffix:         []byte{0x45, 0x78, 0x69, 0x66, 0x00, 0x00},
+		},
+		Offset:        0,
+		NameExtension: []string{"jpg", "jpeg"},
+		Description:   "JPEG raw or in the JFIF or Exif file format",
+		Tag:           JPEG_RAW,
+	},
+}
+
+var knownSignatures6 = map[FileType]HexSignature[AnyBytesInMiddle, OffsetAny, []string]{
+	IIF_ILBM: {
+		Bytes: AnyBytesInMiddle{
+			Prefix:         []byte{0x46, 0x4F, 0x52, 0x4D},
+			AnyBytesOffset: 4,
+			AnyBytesLength: 4,
+			Suffix:         []byte{0x49, 0x4C, 0x42, 0x4D},
+		},
+		Offset:        OFFSET_ANY,
+		NameExtension: []string{"ilbm", "lbm", "ibm", "iff"},
+		Description:   "IFF Interleaved Bitmap Image",
+		Tag:           IIF_ILBM,
+	},
+}
+
+var knownSignatures7 = map[FileType]HexSignature[[]byte, uint64, []string]{
 	ZERO: {
 		Bytes:         []byte{0x00},
 		Offset:        0,

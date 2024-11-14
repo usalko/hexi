@@ -46,7 +46,10 @@ func init() {
 	updateLookupTables(knownSignatures1)
 	updateLookupTables(knownSignatures2)
 	updateLookupTables(knownSignatures3)
+	updateLookupTables(knownSignatures4)
 	updateLookupTables(knownSignatures5)
+	updateLookupTables(knownSignatures6)
+	updateLookupTables(knownSignatures7)
 }
 
 func LookupSignatureByBytes1(header []byte) (*HexSignature[[]byte, uint64, string], error) {
@@ -82,10 +85,43 @@ func LookupSignatureByBytes3(header []byte) (*HexSignature[OneOfByteSequences, u
 	return nil, fmt.Errorf("unknown signature")
 }
 
-func LookupSignatureByBytes5(header []byte) (*HexSignature[[]byte, uint64, []string], error) {
+func LookupSignatureByBytes4(header []byte) (*HexSignature[OneOfByteSequences, uint64, []string], error) {
+	fileTypes, ok := lookupTableZeroOffset[[8]byte(slices.Grow(slices.Clone(header), 8)[:8])]
+	if ok && len(fileTypes) == 1 {
+		hexSignature, ok := knownSignatures4[fileTypes[0]]
+		if ok {
+			return &hexSignature, nil
+		}
+	}
+	return nil, fmt.Errorf("unknown signature")
+}
+
+func LookupSignatureByBytes5(header []byte) (*HexSignature[AnyBytesInMiddle, uint64, []string], error) {
 	fileTypes, ok := lookupTableZeroOffset[[8]byte(slices.Grow(slices.Clone(header), 8)[:8])]
 	if ok && len(fileTypes) == 1 {
 		hexSignature, ok := knownSignatures5[fileTypes[0]]
+		if ok {
+			return &hexSignature, nil
+		}
+	}
+	return nil, fmt.Errorf("unknown signature")
+}
+
+func LookupSignatureByBytes6(header []byte) (*HexSignature[AnyBytesInMiddle, OffsetAny, []string], error) {
+	fileTypes, ok := lookupTableZeroOffset[[8]byte(slices.Grow(slices.Clone(header), 8)[:8])]
+	if ok && len(fileTypes) == 1 {
+		hexSignature, ok := knownSignatures6[fileTypes[0]]
+		if ok {
+			return &hexSignature, nil
+		}
+	}
+	return nil, fmt.Errorf("unknown signature")
+}
+
+func LookupSignatureByBytes7(header []byte) (*HexSignature[[]byte, uint64, []string], error) {
+	fileTypes, ok := lookupTableZeroOffset[[8]byte(slices.Grow(slices.Clone(header), 8)[:8])]
+	if ok && len(fileTypes) == 1 {
+		hexSignature, ok := knownSignatures7[fileTypes[0]]
 		if ok {
 			return &hexSignature, nil
 		}

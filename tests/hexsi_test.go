@@ -1,6 +1,7 @@
 package tests
 
 import (
+	"crypto/rand"
 	"encoding/hex"
 	"fmt"
 	"strings"
@@ -26,9 +27,17 @@ func check(err error, msgs ...any) {
 func wikiBytes(bytesString string) []byte {
 	result := []byte{}
 	for _, byteAsString := range strings.Split(strings.Trim(bytesString, " "), " ") {
-		b, err := hex.DecodeString(byteAsString)
-		check(err, "Invalid hex representation of byte %s", byteAsString)
-		result = append(result, b[0])
+		if byteAsString == "??" {
+			b := make([]byte, 1)
+			if _, err := rand.Read(b); err != nil {
+				check(err)
+			}
+			result = append(result, b[0])
+		} else {
+			b, err := hex.DecodeString(byteAsString)
+			check(err, "Invalid hex representation of byte %s", byteAsString)
+			result = append(result, b[0])
+		}
 	}
 	return result
 }
@@ -305,3 +314,188 @@ func TestLookupBz2(t *testing.T) {
 
 	assert.Equal(t, *fileType, internal.BZ2)
 }
+
+func TestLookupGif87a(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("47 49 46 38 37 61"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.GIF)
+}
+
+func TestLookupGif89a(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("47 49 46 38 39 61"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.GIF)
+}
+
+func TestLookupTiffLe(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("49 49 2A 00"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.TIFF)
+}
+
+func TestLookupTiffBe(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("4D 4D 00 2A"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.TIFF)
+}
+
+func TestLookupBigTiffLe(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("49 49 2B 00"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.BIG_TIFF)
+}
+
+func TestLookupBigTiffBe(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("4D 4D 00 2B"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.BIG_TIFF)
+}
+
+func TestLookupKodakCin(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("80 2A 5F D7"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.KODAK_CIN)
+}
+
+func TestLookupKodakRncV1(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("52 4E 43 01"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.RNC_V1)
+
+}
+
+func TestLookupKodakRncV2(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("52 4E 43 02"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.RNC_V2)
+
+}
+
+func TestLookupNuruImage(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("4E 55 52 55 49 4D 47"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.NURU_IMAGE)
+
+}
+
+func TestLookupNuruPalette(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("4E 55 52 55 50 41 4C"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.NURU_PALETTE)
+
+}
+
+func TestLookupSmpteDpxBe(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("53 44 50 58"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.SMPTE_DPX)
+
+}
+
+func TestLookupSmpteDpxLe(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("58 50 44 53"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.SMPTE_DPX)
+
+}
+
+func TestLookupOpenExr(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("76 2F 31 01"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.OPEN_EXR)
+
+}
+
+func TestLookupBpg(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("42 50 47 FB"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.BPG)
+
+}
+
+func TestLookupJpegRaw1(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("FF D8 FF DB"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.JPEG_RAW)
+
+}
+
+func TestLookupJpegRaw2(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("FF D8 FF E0 00 10 4A 46 49 46 00 01"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.JPEG_RAW)
+
+}
+
+func TestLookupJpegRaw3(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("FF D8 FF EE"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.JPEG_RAW)
+
+}
+
+// func TestLookupJpegRaw4(t *testing.T) {
+// 	fileType, err := hexsi.DetectFileType(wikiBytes("FF D8 FF E1 ?? ?? 45 78 69 66 00 00"))
+// 	check(err)
+
+// 	assert.Equal(t, *fileType, internal.JPEG_RAW)
+
+// }
+
+func TestLookupJpegRaw5(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("FF D8 FF E0"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.JPEG_RAW)
+
+}
+
+func TestLookupJpeg2000Case1(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("00 00 00 0C 6A 50 20 20 0D 0A 87 0A"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.JPEG_2000)
+
+}
+
+func TestLookupJpeg2000Case2(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("FF 4F FF 51"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.JPEG_2000)
+
+}
+
+func TestLookupQui(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("71 6f 69 66"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.QUI)
+
+}
+
+// func TestLookupIifIlbm(t *testing.T) {
+// 	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 49 4C 42 4D"))
+// 	check(err)
+
+// 	assert.Equal(t, *fileType, internal.IIF_ILBM)
+
+// }
