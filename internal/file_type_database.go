@@ -5,58 +5,70 @@ import "regexp"
 type FileType uint16
 
 const (
-	SHEBANG            FileType = 1  //Script or data to be passed to the program following the shebang (#!)
-	CLARIS_WORKS       FileType = 2  //Claris Works word processing doc
-	LOTUS_123_V1       FileType = 3  //Lotus 1-2-3 spreadsheet (v1) file
-	LOTUS_123_V3       FileType = 4  //Lotus 1-2-3 spreadsheet (v3) file
-	LOTUS_123_V4_V5    FileType = 5  //Lotus 1-2-3 spreadsheet (v4, v5) file
-	LOTUS_123_V9       FileType = 6  //Lotus 1-2-3 spreadsheet (v9) file
-	AMIGA_HUNK_EXE     FileType = 7  //Amiga Hunk executable file
-	QUARK_EXPRESS      FileType = 8  //Quark Express document
-	PASSWORD_GORILLA   FileType = 9  //Password Gorilla Password Database
-	LIBPCAP            FileType = 10 //Libpcap File Format
-	LIBPCAP_NS         FileType = 11 //Libpcap File Format (nanosecond-resolution)
-	PCAPNPG            FileType = 12 //PCAP Next Generation Dump File Format
-	RPM                FileType = 13 //RedHat Package Manager (RPM) package
-	SQLITE3            FileType = 14 //SQLite Database
-	AMAZON_KINDLE_UP   FileType = 15 //Amazon Kindle Update Package
-	DOOM_WAD           FileType = 16 //internal WAD (main resource file of Doom)
-	ZERO               FileType = 17 //IBM Storyboard bitmap file, Windows Program Information File, Mac Stuffit Self-Extracting Archive, IRIS OCR data file
-	PALM_PILOT         FileType = 18 //PalmPilot Database/Document File
-	PALM_DSK_CALENDAR  FileType = 19 //Palm Desktop Calendar Archive
-	PALM_DSK_TODO      FileType = 20 //Palm Desktop To Do Archive
-	PALM_DSK_CALENDAR2 FileType = 21 //Palm Desktop Calendar Archive
-	TELEGRAM_DSK       FileType = 22 //Telegram Desktop File
-	TELEGRAM_DSK_ENC   FileType = 23 //Telegram Desktop Encrypted File
-	PALM_DSK_DATA      FileType = 24 //Palm Desktop Data File (Access format)
-	ICON               FileType = 25 //Computer icon encoded in ICO file format
-	APPLE_ICON_FORMAT  FileType = 26 //Apple Icon Image format
-	THREE_GPP          FileType = 27 //3rd Generation Partnership Project 3GPP and 3GPP2 multimedia files
-	HEIC               FileType = 28 //High Efficiency Image Container (HEIC)
-	Z_LZW              FileType = 29 //compressed file (often tar zip) using Lempel-Ziv-Welch algorithm
-	Z_LZH              FileType = 30 //Compressed file (often tar zip) using LZH algorithm
-	LZH0               FileType = 31 //Lempel Ziv Huffman archive file Method 0 (No compression)
-	LZH5               FileType = 32 //Lempel Ziv Huffman archive file Method 5 (8 KiB sliding window)
-	AMI_BACK           FileType = 33 //AmiBack Amiga Backup data file
-	AMI_BACK_IDX       FileType = 34 //AmiBack Amiga Backup index file
-	BPLIST             FileType = 35 //Binary Property List file
-	BZ2                FileType = 36 //Compressed file using Bzip2 algorithm
-	GIF                FileType = 37 //Image file encoded in the Graphics Interchange Format (GIF)
-	TIFF               FileType = 38 //Tagged Image File Format (TIFF)
-	BIG_TIFF           FileType = 39 //BigTIFF
-	CANON_RAW_V2       FileType = 40 //Canon RAW Format Version 2 Canon's RAW format is based on TIFF
-	KODAK_CIN          FileType = 41 //Kodak Cineon image
-	RNC_V1             FileType = 42 //Compressed file using Rob Northen Compression (version 1) algorithm
-	RNC_V2             FileType = 43 //Compressed file using Rob Northen Compression (version 2) algorithm
-	NURU_IMAGE         FileType = 44 //nuru ASCII/ANSI image files
-	NURU_PALETTE       FileType = 45 //nup	nuru ASCII/ANSI palette files
-	SMPTE_DPX          FileType = 46 //SMPTE DPX image
-	OPEN_EXR           FileType = 47 //OpenEXR image
-	BPG                FileType = 48 //Better Portable Graphics format
-	JPEG_RAW           FileType = 49 //JPEG raw or in the JFIF or Exif file format
-	JPEG_2000          FileType = 50 //JPEG 2000 format
-	QUI                FileType = 51 //The “Quite OK Image Format”
-	IIF_ILBM           FileType = 52 //IFF Interleaved Bitmap Image
+	SHEBANG              FileType = 1  //Script or data to be passed to the program following the shebang (#!)
+	CLARIS_WORKS         FileType = 2  //Claris Works word processing doc
+	LOTUS_123_V1         FileType = 3  //Lotus 1-2-3 spreadsheet (v1) file
+	LOTUS_123_V3         FileType = 4  //Lotus 1-2-3 spreadsheet (v3) file
+	LOTUS_123_V4_V5      FileType = 5  //Lotus 1-2-3 spreadsheet (v4, v5) file
+	LOTUS_123_V9         FileType = 6  //Lotus 1-2-3 spreadsheet (v9) file
+	AMIGA_HUNK_EXE       FileType = 7  //Amiga Hunk executable file
+	QUARK_EXPRESS        FileType = 8  //Quark Express document
+	PASSWORD_GORILLA     FileType = 9  //Password Gorilla Password Database
+	LIBPCAP              FileType = 10 //Libpcap File Format
+	LIBPCAP_NS           FileType = 11 //Libpcap File Format (nanosecond-resolution)
+	PCAPNPG              FileType = 12 //PCAP Next Generation Dump File Format
+	RPM                  FileType = 13 //RedHat Package Manager (RPM) package
+	SQLITE3              FileType = 14 //SQLite Database
+	AMAZON_KINDLE_UP     FileType = 15 //Amazon Kindle Update Package
+	DOOM_WAD             FileType = 16 //internal WAD (main resource file of Doom)
+	ZERO                 FileType = 17 //IBM Storyboard bitmap file, Windows Program Information File, Mac Stuffit Self-Extracting Archive, IRIS OCR data file
+	PALM_PILOT           FileType = 18 //PalmPilot Database/Document File
+	PALM_DSK_CALENDAR    FileType = 19 //Palm Desktop Calendar Archive
+	PALM_DSK_TODO        FileType = 20 //Palm Desktop To Do Archive
+	PALM_DSK_CALENDAR2   FileType = 21 //Palm Desktop Calendar Archive
+	TELEGRAM_DSK         FileType = 22 //Telegram Desktop File
+	TELEGRAM_DSK_ENC     FileType = 23 //Telegram Desktop Encrypted File
+	PALM_DSK_DATA        FileType = 24 //Palm Desktop Data File (Access format)
+	ICON                 FileType = 25 //Computer icon encoded in ICO file format
+	APPLE_ICON_FORMAT    FileType = 26 //Apple Icon Image format
+	THREE_GPP            FileType = 27 //3rd Generation Partnership Project 3GPP and 3GPP2 multimedia files
+	HEIC                 FileType = 28 //High Efficiency Image Container (HEIC)
+	Z_LZW                FileType = 29 //compressed file (often tar zip) using Lempel-Ziv-Welch algorithm
+	Z_LZH                FileType = 30 //Compressed file (often tar zip) using LZH algorithm
+	LZH0                 FileType = 31 //Lempel Ziv Huffman archive file Method 0 (No compression)
+	LZH5                 FileType = 32 //Lempel Ziv Huffman archive file Method 5 (8 KiB sliding window)
+	AMI_BACK             FileType = 33 //AmiBack Amiga Backup data file
+	AMI_BACK_IDX         FileType = 34 //AmiBack Amiga Backup index file
+	BPLIST               FileType = 35 //Binary Property List file
+	BZ2                  FileType = 36 //Compressed file using Bzip2 algorithm
+	GIF                  FileType = 37 //Image file encoded in the Graphics Interchange Format (GIF)
+	TIFF                 FileType = 38 //Tagged Image File Format (TIFF)
+	BIG_TIFF             FileType = 39 //BigTIFF
+	CANON_RAW_V2         FileType = 40 //Canon RAW Format Version 2 Canon's RAW format is based on TIFF
+	KODAK_CIN            FileType = 41 //Kodak Cineon image
+	RNC_V1               FileType = 42 //Compressed file using Rob Northen Compression (version 1) algorithm
+	RNC_V2               FileType = 43 //Compressed file using Rob Northen Compression (version 2) algorithm
+	NURU_IMAGE           FileType = 44 //nuru ASCII/ANSI image files
+	NURU_PALETTE         FileType = 45 //nup	nuru ASCII/ANSI palette files
+	SMPTE_DPX            FileType = 46 //SMPTE DPX image
+	OPEN_EXR             FileType = 47 //OpenEXR image
+	BPG                  FileType = 48 //Better Portable Graphics format
+	JPEG_RAW             FileType = 49 //JPEG raw or in the JFIF or Exif file format
+	JPEG_2000            FileType = 50 //JPEG 2000 format
+	QUI                  FileType = 51 //The “Quite OK Image Format”
+	IIF_ILBM             FileType = 52 //IFF Interleaved Bitmap Image
+	IIF_VOICE            FileType = 53 //IFF 8-Bit Sampled Voice
+	IIF_AMIGA_CB         FileType = 54 //Amiga Contiguous Bitmap
+	IIF_ANI_BMP          FileType = 55 //IFF Animated Bitmap
+	IIF_ANI_CEL          FileType = 56 //IFF CEL Animation
+	IIF_FAX_IMG          FileType = 57 //IFF Facsimile Image
+	IIF_FT               FileType = 58 //IFF Formatted Text
+	IIF_MUS_SCORE_SIMPLE FileType = 59 //IFF Simple Musical Score
+	IIF_MUS_SCORE        FileType = 60 //IFF Musical Score
+	IIF_YUV_IMAGE        FileType = 61 //IFF YUV Image
+	IIF_AMIGA_FVM        FileType = 62 //Amiga Fantavision Movie
+	IIF_AIFF             FileType = 63 //Audio Interchange File Format
+	LZ                   FileType = 64 //lzip compressed file
 )
 
 type AnyBytesInMiddle struct {
@@ -350,6 +362,13 @@ var knownSignatures1 = map[FileType]HexSignature[[]byte, uint64, string]{
 		Description:   "QOI - The “Quite OK Image Format”",
 		Tag:           QUI,
 	},
+	LZ: {
+		Bytes:         []byte{0x4C, 0x5A, 0x49, 0x50},
+		Offset:        0,
+		NameExtension: "lz",
+		Description:   "lzip compressed file",
+		Tag:           LZ,
+	},
 }
 
 var knownSignatures2 = map[FileType]HexSignature[[]byte, uint64, []string]{
@@ -469,12 +488,6 @@ var knownSignatures4 = map[FileType]HexSignature[OneOfByteSequences, uint64, []s
 			{0xFF, 0xD8, 0xFF, 0xDB},
 			{0xFF, 0xD8, 0xFF, 0xE0, 0x00, 0x10, 0x4A, 0x46, 0x49, 0x46, 0x00, 0x01},
 			{0xFF, 0xD8, 0xFF, 0xEE},
-			// AnyBytesInMiddle {
-			// 	Prefix: []byte{0xFF, 0xD8, 0xFF, 0xE1},
-			// 	AnyBytesOffset: 4,
-			// 	AnyBytesLength: 2,
-			// 	Suffix: []byte{0x45, 0x78, 0x69, 0x66, 0x00, 0x00},
-			// },
 			{0xFF, 0xD8, 0xFF, 0xE0},
 		},
 		Offset:        0,
@@ -521,6 +534,138 @@ var knownSignatures6 = map[FileType]HexSignature[AnyBytesInMiddle, OffsetAny, []
 		NameExtension: []string{"ilbm", "lbm", "ibm", "iff"},
 		Description:   "IFF Interleaved Bitmap Image",
 		Tag:           IIF_ILBM,
+	},
+	IIF_VOICE: {
+		Bytes: AnyBytesInMiddle{
+			Prefix:         []byte{0x46, 0x4F, 0x52, 0x4D},
+			AnyBytesOffset: 4,
+			AnyBytesLength: 4,
+			Suffix:         []byte{0x38, 0x53, 0x56, 0x58},
+		},
+		Offset:        OFFSET_ANY,
+		NameExtension: []string{"8svx", "8sv", "svx", "snd", "iff"},
+		Description:   "IFF 8-Bit Sampled Voice",
+		Tag:           IIF_VOICE,
+	},
+	IIF_AMIGA_CB: {
+		Bytes: AnyBytesInMiddle{
+			Prefix:         []byte{0x46, 0x4F, 0x52, 0x4D},
+			AnyBytesOffset: 4,
+			AnyBytesLength: 4,
+			Suffix:         []byte{0x41, 0x43, 0x42, 0x4D},
+		},
+		Offset:        OFFSET_ANY,
+		NameExtension: []string{"acbm", "iff"},
+		Description:   "Amiga Contiguous Bitmap",
+		Tag:           IIF_AMIGA_CB,
+	},
+	IIF_ANI_BMP: {
+		Bytes: AnyBytesInMiddle{
+			Prefix:         []byte{0x46, 0x4F, 0x52, 0x4D},
+			AnyBytesOffset: 4,
+			AnyBytesLength: 4,
+			Suffix:         []byte{0x41, 0x4E, 0x42, 0x4D},
+		},
+		Offset:        OFFSET_ANY,
+		NameExtension: []string{"anbm", "iff"},
+		Description:   "IFF Animated Bitmap",
+		Tag:           IIF_ANI_BMP,
+	},
+	IIF_ANI_CEL: {
+		Bytes: AnyBytesInMiddle{
+			Prefix:         []byte{0x46, 0x4F, 0x52, 0x4D},
+			AnyBytesOffset: 4,
+			AnyBytesLength: 4,
+			Suffix:         []byte{0x41, 0x4E, 0x49, 0x4D},
+		},
+		Offset:        OFFSET_ANY,
+		NameExtension: []string{"anim", "iff"},
+		Description:   "IFF CEL Animation",
+		Tag:           IIF_ANI_CEL,
+	},
+	IIF_FAX_IMG: {
+		Bytes: AnyBytesInMiddle{
+			Prefix:         []byte{0x46, 0x4F, 0x52, 0x4D},
+			AnyBytesOffset: 4,
+			AnyBytesLength: 4,
+			Suffix:         []byte{0x46, 0x41, 0x58, 0x58},
+		},
+		Offset:        OFFSET_ANY,
+		NameExtension: []string{"faxx", "fax", "iff"},
+		Description:   "IFF Facsimile Image",
+		Tag:           IIF_FAX_IMG,
+	},
+	IIF_FT: {
+		Bytes: AnyBytesInMiddle{
+			Prefix:         []byte{0x46, 0x4F, 0x52, 0x4D},
+			AnyBytesOffset: 4,
+			AnyBytesLength: 4,
+			Suffix:         []byte{0x46, 0x54, 0x58, 0x54},
+		},
+		Offset:        OFFSET_ANY,
+		NameExtension: []string{"ftxt", "iff"},
+		Description:   "IFF Formatted Text",
+		Tag:           IIF_FT,
+	},
+	IIF_MUS_SCORE_SIMPLE: {
+		Bytes: AnyBytesInMiddle{
+			Prefix:         []byte{0x46, 0x4F, 0x52, 0x4D},
+			AnyBytesOffset: 4,
+			AnyBytesLength: 4,
+			Suffix:         []byte{0x53, 0x4D, 0x55, 0x53},
+		},
+		Offset:        OFFSET_ANY,
+		NameExtension: []string{"smus", "smu", "mus", "iff"},
+		Description:   "IFF Simple Musical Score",
+		Tag:           IIF_MUS_SCORE_SIMPLE,
+	},
+	IIF_MUS_SCORE: {
+		Bytes: AnyBytesInMiddle{
+			Prefix:         []byte{0x46, 0x4F, 0x52, 0x4D},
+			AnyBytesOffset: 4,
+			AnyBytesLength: 4,
+			Suffix:         []byte{0x43, 0x4D, 0x55, 0x53},
+		},
+		Offset:        OFFSET_ANY,
+		NameExtension: []string{"cmus", "mus", "iff"},
+		Description:   "IFF Musical Score",
+		Tag:           IIF_MUS_SCORE,
+	},
+	IIF_YUV_IMAGE: {
+		Bytes: AnyBytesInMiddle{
+			Prefix:         []byte{0x46, 0x4F, 0x52, 0x4D},
+			AnyBytesOffset: 4,
+			AnyBytesLength: 4,
+			Suffix:         []byte{0x59, 0x55, 0x56, 0x4E},
+		},
+		Offset:        OFFSET_ANY,
+		NameExtension: []string{"yuvn", "yuv", "iff"},
+		Description:   "IFF YUV Image",
+		Tag:           IIF_YUV_IMAGE,
+	},
+	IIF_AMIGA_FVM: {
+		Bytes: AnyBytesInMiddle{
+			Prefix:         []byte{0x46, 0x4F, 0x52, 0x4D},
+			AnyBytesOffset: 4,
+			AnyBytesLength: 4,
+			Suffix:         []byte{0x46, 0x41, 0x4E, 0x54},
+		},
+		Offset:        OFFSET_ANY,
+		NameExtension: []string{"iff"},
+		Description:   "Amiga Fantavision Movie",
+		Tag:           IIF_AMIGA_FVM,
+	},
+	IIF_AIFF: {
+		Bytes: AnyBytesInMiddle{
+			Prefix:         []byte{0x46, 0x4F, 0x52, 0x4D},
+			AnyBytesOffset: 4,
+			AnyBytesLength: 4,
+			Suffix:         []byte{0x41, 0x49, 0x46, 0x46},
+		},
+		Offset:        OFFSET_ANY,
+		NameExtension: []string{"aiff", "aif", "aifc", "snd", "iff"},
+		Description:   "Audio Interchange File Format",
+		Tag:           IIF_AIFF,
 	},
 }
 

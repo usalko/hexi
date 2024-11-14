@@ -499,3 +499,107 @@ func TestLookupQui(t *testing.T) {
 // 	assert.Equal(t, *fileType, internal.IIF_ILBM)
 
 // }
+
+// func TestLookupIifIlbm(t *testing.T) {
+// 	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 49 4C 42 4D"))
+// 	check(err)
+
+// 	assert.Equal(t, *fileType, internal.IIF_ILBM)
+
+// }
+
+// func TestLookupIifVoice(t *testing.T) {
+// 	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 38 53 56 58"))
+// 	check(err)
+
+// 	assert.Equal(t, *fileType, internal.IIF_VOICE)
+
+// }
+
+// func TestLookupIifAmigaCb(t *testing.T) {
+// 	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 41 43 42 4D"))
+// 	check(err)
+
+// 	assert.Equal(t, *fileType, internal.IIF_AMIGA_CB)
+
+// }
+
+// func TestLookupIifAniBmp(t *testing.T) {
+// 	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 41 4E 42 4D"))
+// 	check(err)
+
+// 	assert.Equal(t, *fileType, internal.IIF_ANI_BMP)
+
+// }
+
+// func TestLookupAniCel(t *testing.T) {
+// 	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 41 4E 49 4D"))
+// 	check(err)
+
+// 	assert.Equal(t, *fileType, internal.IIF_ANI_CEL)
+
+// }
+
+// func TestLookupFaxImg(t *testing.T) {
+// 	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 46 41 58 58"))
+// 	check(err)
+
+// 	assert.Equal(t, *fileType, internal.IIF_FAX_IMG)
+
+// }
+
+// func TestLookupIifFt(t *testing.T) {
+// 	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 46 54 58 54"))
+// 	check(err)
+
+// 	assert.Equal(t, *fileType, internal.IIF_FT)
+
+// }
+
+// func TestLookupIifMusScoreSimple(t *testing.T) {
+// 	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 53 4D 55 53"))
+// 	check(err)
+
+// 	assert.Equal(t, *fileType, internal.IIF_MUS_SCORE_SIMPLE)
+
+// }
+
+// func TestLookupIifMusScore(t *testing.T) {
+// 	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 43 4D 55 53"))
+// 	check(err)
+
+// 	assert.Equal(t, *fileType, internal.IIF_MUS_SCORE)
+
+// }
+
+// func TestLookupIifYuvImage(t *testing.T) {
+// 	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 59 55 56 4E"))
+// 	check(err)
+
+// 	assert.Equal(t, *fileType, internal.IIF_YUV_IMAGE)
+
+// }
+
+// func TestLookupAmigaFvm(t *testing.T) {
+// 	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 46 41 4E 54"))
+// 	check(err)
+
+// 	assert.Equal(t, *fileType, internal.IIF_AMIGA_FVM)
+
+// }
+
+// func TestLookupIifAiff(t *testing.T) {
+// 	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 41 49 46 46"))
+// 	check(err)
+
+// 	assert.Equal(t, *fileType, internal.IIF_AIFF)
+
+// }
+
+func TestLookupLz(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("4C 5A 49 50"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.LZ)
+
+}
