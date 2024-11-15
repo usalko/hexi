@@ -182,7 +182,7 @@ func TestLookupZero(t *testing.T) {
 	assert.Equal(t, *fileType, internal.ZERO)
 }
 
-// func TestLookupPalmPilot(t *testing.T) {
+// func TestLookupPalmPilot(t *testing.T) { // Offset 11
 // 	fileType, err := hexsi.DetectFileType(wikiBytes("01 01 01 01 01 01 01 01 01 01 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"))
 // 	check(err)
 
@@ -245,14 +245,14 @@ func TestLookupAppleIconFormat(t *testing.T) {
 	assert.Equal(t, *fileType, internal.APPLE_ICON_FORMAT)
 }
 
-// func TestLookupTreeGpp(t *testing.T) {
+// func TestLookupTreeGpp(t *testing.T) { // Offset 4
 // 	fileType, err := hexsi.DetectFileType(wikiBytes("66 74 79 70 33 67"))
 // 	check(err)
 
 // 	assert.Equal(t, *fileType, internal.THREE_GPP)
 // }
 
-// func TestLookupHeic(t *testing.T) {
+// func TestLookupHeic(t *testing.T) { // Offset 4
 // 	fileType, err := hexsi.DetectFileType(wikiBytes("66 74 79 70 68 65 69 63 66 74 79 70 6d"))
 // 	check(err)
 
@@ -273,14 +273,14 @@ func TestLookupZlzh(t *testing.T) {
 	assert.Equal(t, *fileType, internal.Z_LZH)
 }
 
-// func TestLookupLzh0(t *testing.T) {
+// func TestLookupLzh0(t *testing.T) { // Offset 2
 // 	fileType, err := hexsi.DetectFileType(wikiBytes("2D 68 6C 30 2D"))
 // 	check(err)
 
 // 	assert.Equal(t, *fileType, internal.LZH0)
 // }
 
-// func TestLookupLzh5(t *testing.T) {
+// func TestLookupLzh5(t *testing.T) { // Offset 2
 // 	fileType, err := hexsi.DetectFileType(wikiBytes("2D 68 6C 35 2D"))
 // 	check(err)
 
@@ -452,13 +452,13 @@ func TestLookupJpegRaw3(t *testing.T) {
 
 }
 
-// func TestLookupJpegRaw4(t *testing.T) {
-// 	fileType, err := hexsi.DetectFileType(wikiBytes("FF D8 FF E1 ?? ?? 45 78 69 66 00 00"))
-// 	check(err)
+func TestLookupJpegRaw4(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("FF D8 FF E1 ?? ?? 45 78 69 66 00 00"))
+	check(err)
 
-// 	assert.Equal(t, *fileType, internal.JPEG_RAW)
+	assert.Equal(t, *fileType, internal.JPEG_RAW)
 
-// }
+}
 
 func TestLookupJpegRaw5(t *testing.T) {
 	fileType, err := hexsi.DetectFileType(wikiBytes("FF D8 FF E0"))
@@ -492,109 +492,101 @@ func TestLookupQui(t *testing.T) {
 
 }
 
-// func TestLookupIifIlbm(t *testing.T) {
-// 	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 49 4C 42 4D"))
-// 	check(err)
+func TestLookupIifIlbm(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 49 4C 42 4D"))
+	check(err)
 
-// 	assert.Equal(t, *fileType, internal.IIF_ILBM)
+	assert.Equal(t, *fileType, internal.IIF_ILBM)
 
-// }
+}
 
-// func TestLookupIifIlbm(t *testing.T) {
-// 	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 49 4C 42 4D"))
-// 	check(err)
+func TestLookupIifVoice(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 38 53 56 58"))
+	check(err)
 
-// 	assert.Equal(t, *fileType, internal.IIF_ILBM)
+	assert.Equal(t, *fileType, internal.IIF_VOICE)
 
-// }
+}
 
-// func TestLookupIifVoice(t *testing.T) {
-// 	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 38 53 56 58"))
-// 	check(err)
+func TestLookupIifAmigaCb(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 41 43 42 4D"))
+	check(err)
 
-// 	assert.Equal(t, *fileType, internal.IIF_VOICE)
+	assert.Equal(t, *fileType, internal.IIF_AMIGA_CB)
 
-// }
+}
 
-// func TestLookupIifAmigaCb(t *testing.T) {
-// 	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 41 43 42 4D"))
-// 	check(err)
+func TestLookupIifAniBmp(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 41 4E 42 4D"))
+	check(err)
 
-// 	assert.Equal(t, *fileType, internal.IIF_AMIGA_CB)
+	assert.Equal(t, *fileType, internal.IIF_ANI_BMP)
 
-// }
+}
 
-// func TestLookupIifAniBmp(t *testing.T) {
-// 	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 41 4E 42 4D"))
-// 	check(err)
+func TestLookupAniCel(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 41 4E 49 4D"))
+	check(err)
 
-// 	assert.Equal(t, *fileType, internal.IIF_ANI_BMP)
+	assert.Equal(t, *fileType, internal.IIF_ANI_CEL)
 
-// }
+}
 
-// func TestLookupAniCel(t *testing.T) {
-// 	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 41 4E 49 4D"))
-// 	check(err)
+func TestLookupFaxImg(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 46 41 58 58"))
+	check(err)
 
-// 	assert.Equal(t, *fileType, internal.IIF_ANI_CEL)
+	assert.Equal(t, *fileType, internal.IIF_FAX_IMG)
 
-// }
+}
 
-// func TestLookupFaxImg(t *testing.T) {
-// 	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 46 41 58 58"))
-// 	check(err)
+func TestLookupIifFt(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 46 54 58 54"))
+	check(err)
 
-// 	assert.Equal(t, *fileType, internal.IIF_FAX_IMG)
+	assert.Equal(t, *fileType, internal.IIF_FT)
 
-// }
+}
 
-// func TestLookupIifFt(t *testing.T) {
-// 	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 46 54 58 54"))
-// 	check(err)
+func TestLookupIifMusScoreSimple(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 53 4D 55 53"))
+	check(err)
 
-// 	assert.Equal(t, *fileType, internal.IIF_FT)
+	assert.Equal(t, *fileType, internal.IIF_MUS_SCORE_SIMPLE)
 
-// }
+}
 
-// func TestLookupIifMusScoreSimple(t *testing.T) {
-// 	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 53 4D 55 53"))
-// 	check(err)
+func TestLookupIifMusScore(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 43 4D 55 53"))
+	check(err)
 
-// 	assert.Equal(t, *fileType, internal.IIF_MUS_SCORE_SIMPLE)
+	assert.Equal(t, *fileType, internal.IIF_MUS_SCORE)
 
-// }
+}
 
-// func TestLookupIifMusScore(t *testing.T) {
-// 	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 43 4D 55 53"))
-// 	check(err)
+func TestLookupIifYuvImage(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 59 55 56 4E"))
+	check(err)
 
-// 	assert.Equal(t, *fileType, internal.IIF_MUS_SCORE)
+	assert.Equal(t, *fileType, internal.IIF_YUV_IMAGE)
 
-// }
+}
 
-// func TestLookupIifYuvImage(t *testing.T) {
-// 	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 59 55 56 4E"))
-// 	check(err)
+func TestLookupAmigaFvm(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 46 41 4E 54"))
+	check(err)
 
-// 	assert.Equal(t, *fileType, internal.IIF_YUV_IMAGE)
+	assert.Equal(t, *fileType, internal.IIF_AMIGA_FVM)
 
-// }
+}
 
-// func TestLookupAmigaFvm(t *testing.T) {
-// 	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 46 41 4E 54"))
-// 	check(err)
+func TestLookupIifAiff(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 41 49 46 46"))
+	check(err)
 
-// 	assert.Equal(t, *fileType, internal.IIF_AMIGA_FVM)
+	assert.Equal(t, *fileType, internal.IIF_AIFF)
 
-// }
-
-// func TestLookupIifAiff(t *testing.T) {
-// 	fileType, err := hexsi.DetectFileType(wikiBytes("46 4F 52 4D ?? ?? ?? ?? 41 49 46 46"))
-// 	check(err)
-
-// 	assert.Equal(t, *fileType, internal.IIF_AIFF)
-
-// }
+}
 
 func TestLookupLz(t *testing.T) {
 	fileType, err := hexsi.DetectFileType(wikiBytes("4C 5A 49 50"))
@@ -715,5 +707,336 @@ func TestLookupUtf8Text(t *testing.T) {
 	check(err)
 
 	assert.Equal(t, *fileType, internal.UTF8_TXT)
+
+}
+
+func TestLookupUtf16LeTxt(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("FF FE"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.UTF16LE_TXT)
+
+}
+
+func TestLookupUtf16BeTxt(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("FE FF"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.UTF16BE_TXT)
+
+}
+func TestLookupUtf32LeTxt(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("FF FE 00 00"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.UTF32LE_TXT)
+
+}
+func TestLookupUtf32BeTxt(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("00 00 FE FF"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.UTF32BE_TXT)
+
+}
+func TestLookupUtf7TxtCase1(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("2B 2F 76 38"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.UTF7_TXT)
+
+}
+func TestLookupUtf7TxtCase2(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("2B 2F 76 39"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.UTF7_TXT)
+
+}
+func TestLookupUtf7TxtCase3(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("2B 2F 76 2B"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.UTF7_TXT)
+
+}
+func TestLookupUtf7TxtCase4(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("2B 2F 76 2F"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.UTF7_TXT)
+
+}
+func TestLookupScsuTxt(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("0E FE FF"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.SCSU_TXT)
+
+}
+func TestLookupEbcdicTxt(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("DD 73 66 73"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.EBCDIC_TXT)
+
+}
+func TestLookupMachOBin32(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("FE ED FA CE"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.MACHO_BIN32)
+
+}
+func TestLookupMachOBin64(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("FE ED FA CF"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.MACHO_BIN64)
+
+}
+func TestLookupJks(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("FE ED FE ED"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.JKS)
+
+}
+func TestLookupMachOBin32R(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("CE FA ED FE"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.MACHO_BIN32R)
+
+}
+func TestLookupMachOBin64R(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("CF FA ED FE"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.MACHO_BIN64R)
+
+}
+func TestLookupPs(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("25 21 50 53"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.PS)
+
+}
+func TestLookupEps3(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("25 21 50 53 2D 41 64 6F 62 65 2D 33 2E 30 20 45 50 53 46 2D 33 2E 30"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.EPS3)
+
+}
+func TestLookupEps31(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("25 21 50 53 2D 41 64 6F 62 65 2D 33 2E 31 20 45 50 53 46 2D 33 2E 30"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.EPS31)
+
+}
+func TestLookupChm(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("49 54 53 46 03 00 00 00 60 00 00 00"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.CHM)
+
+}
+func TestLookupHlp(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("3F 5F"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.HLP)
+
+}
+func TestLookupPdf(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("25 50 44 46 2D"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.PDF)
+
+}
+func TestLookupAsf(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("30 26 B2 75 8E 66 CF 11 A6 D9 00 AA 00 62 CE 6C"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.ASF)
+
+}
+func TestLookupMsSdi(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("24 53 44 49 30 30 30 31"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.MSSDI)
+
+}
+func TestLookupOgg(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("4F 67 67 53"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.OGG)
+
+}
+func TestLookupPsd(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("38 42 50 53"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.PSD)
+
+}
+
+func TestLookupWav(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("52 49 46 46 ?? ?? ?? ?? 57 41 56 45"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.WAV)
+
+}
+
+func TestLookupMp3Case1(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("FF FB"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.MP3)
+
+}
+func TestLookupMp3Case2(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("FF F3"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.MP3)
+
+}
+func TestLookupMp3Case3(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("FF F2"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.MP3)
+
+}
+func TestLookupMp3V2(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("49 44 33"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.MP3V2)
+
+}
+func TestLookupBmp(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("42 4D"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.BMP)
+
+}
+
+// func TestLookupIso(t *testing.T) { // Offsets: one of 0x8001, 0x8801, 0x9001
+// 	fileType, err := hexsi.DetectFileType(wikiBytes("43 44 30 30 31"))
+// 	check(err)
+
+// 	assert.Equal(t, *fileType, internal.ISO)
+
+// }
+
+// func TestLookupCdi(t *testing.T) {  // Offset 0x5EAC9
+// 	fileType, err := hexsi.DetectFileType(wikiBytes("43 44 30 30 31"))
+// 	check(err)
+
+// 	assert.Equal(t, *fileType, internal.CDI)
+
+// }
+
+func TestLookupMgw(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("6D 61 69 6E 2E 62 73"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.MGW)
+
+}
+func TestLookupNes(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("4E 45 53"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.NES)
+
+}
+
+// func TestLookupD64(t *testing.T) {  // Offset 0x165A4
+// 	fileType, err := hexsi.DetectFileType(wikiBytes("A0 32 41 A0 A0 A0"))
+// 	check(err)
+
+// 	assert.Equal(t, *fileType, internal.D64)
+
+// }
+func TestLookupG64(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("47 53 52 2D 31 35 34 31"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.G64)
+
+}
+
+// func TestLookupD81(t *testing.T) {  // Offset 0x61819
+// 	fileType, err := hexsi.DetectFileType(wikiBytes("A0 33 44 A0 A0"))
+// 	check(err)
+
+// 	assert.Equal(t, *fileType, internal.D81)
+
+// }
+func TestLookupT64(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("43 36 34 20 74 61 70 65 20 69 6D 61 67 65 20 66 69 6C 65"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.T64)
+
+}
+func TestLookupCrt64(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("43 36 34 20 43 41 52 54 52 49 44 47 45 20 20 20"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.CRT64)
+
+}
+func TestLookupFits(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("53 49 4D 50 4C 45 20 20 3D 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 54"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.FITS)
+
+}
+func TestLookupFlac(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("66 4C 61 43"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.FLAC)
+
+}
+func TestLookupMidi(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("4D 54 68 64"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.MIDI)
+
+}
+func TestLookupMsCom(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("D0 CF 11 E0 A1 B1 1A E1"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.MSCOM)
+
+}
+func TestLookupDex(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("64 65 78 0A 30 33 35 00"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.DEX)
+
+}
+func TestLookupVdmk(t *testing.T) {
+	fileType, err := hexsi.DetectFileType(wikiBytes("4B 44 4D"))
+	check(err)
+
+	assert.Equal(t, *fileType, internal.VDMK)
 
 }

@@ -5,84 +5,126 @@ import "regexp"
 type FileType uint16
 
 const (
-	SHEBANG              FileType = 1  //Script or data to be passed to the program following the shebang (#!)
-	CLARIS_WORKS         FileType = 2  //Claris Works word processing doc
-	LOTUS_123_V1         FileType = 3  //Lotus 1-2-3 spreadsheet (v1) file
-	LOTUS_123_V3         FileType = 4  //Lotus 1-2-3 spreadsheet (v3) file
-	LOTUS_123_V4_V5      FileType = 5  //Lotus 1-2-3 spreadsheet (v4, v5) file
-	LOTUS_123_V9         FileType = 6  //Lotus 1-2-3 spreadsheet (v9) file
-	AMIGA_HUNK_EXE       FileType = 7  //Amiga Hunk executable file
-	QUARK_EXPRESS        FileType = 8  //Quark Express document
-	PASSWORD_GORILLA     FileType = 9  //Password Gorilla Password Database
-	LIBPCAP              FileType = 10 //Libpcap File Format
-	LIBPCAP_NS           FileType = 11 //Libpcap File Format (nanosecond-resolution)
-	PCAPNPG              FileType = 12 //PCAP Next Generation Dump File Format
-	RPM                  FileType = 13 //RedHat Package Manager (RPM) package
-	SQLITE3              FileType = 14 //SQLite Database
-	AMAZON_KINDLE_UP     FileType = 15 //Amazon Kindle Update Package
-	DOOM_WAD             FileType = 16 //internal WAD (main resource file of Doom)
-	ZERO                 FileType = 17 //IBM Storyboard bitmap file, Windows Program Information File, Mac Stuffit Self-Extracting Archive, IRIS OCR data file
-	PALM_PILOT           FileType = 18 //PalmPilot Database/Document File
-	PALM_DSK_CALENDAR    FileType = 19 //Palm Desktop Calendar Archive
-	PALM_DSK_TODO        FileType = 20 //Palm Desktop To Do Archive
-	PALM_DSK_CALENDAR2   FileType = 21 //Palm Desktop Calendar Archive
-	TELEGRAM_DSK         FileType = 22 //Telegram Desktop File
-	TELEGRAM_DSK_ENC     FileType = 23 //Telegram Desktop Encrypted File
-	PALM_DSK_DATA        FileType = 24 //Palm Desktop Data File (Access format)
-	ICON                 FileType = 25 //Computer icon encoded in ICO file format
-	APPLE_ICON_FORMAT    FileType = 26 //Apple Icon Image format
-	THREE_GPP            FileType = 27 //3rd Generation Partnership Project 3GPP and 3GPP2 multimedia files
-	HEIC                 FileType = 28 //High Efficiency Image Container (HEIC)
-	Z_LZW                FileType = 29 //compressed file (often tar zip) using Lempel-Ziv-Welch algorithm
-	Z_LZH                FileType = 30 //Compressed file (often tar zip) using LZH algorithm
-	LZH0                 FileType = 31 //Lempel Ziv Huffman archive file Method 0 (No compression)
-	LZH5                 FileType = 32 //Lempel Ziv Huffman archive file Method 5 (8 KiB sliding window)
-	AMI_BACK             FileType = 33 //AmiBack Amiga Backup data file
-	AMI_BACK_IDX         FileType = 34 //AmiBack Amiga Backup index file
-	BPLIST               FileType = 35 //Binary Property List file
-	BZ2                  FileType = 36 //Compressed file using Bzip2 algorithm
-	GIF                  FileType = 37 //Image file encoded in the Graphics Interchange Format (GIF)
-	TIFF                 FileType = 38 //Tagged Image File Format (TIFF)
-	BIG_TIFF             FileType = 39 //BigTIFF
-	CANON_RAW_V2         FileType = 40 //Canon RAW Format Version 2 Canon's RAW format is based on TIFF
-	KODAK_CIN            FileType = 41 //Kodak Cineon image
-	RNC_V1               FileType = 42 //Compressed file using Rob Northen Compression (version 1) algorithm
-	RNC_V2               FileType = 43 //Compressed file using Rob Northen Compression (version 2) algorithm
-	NURU_IMAGE           FileType = 44 //nuru ASCII/ANSI image files
-	NURU_PALETTE         FileType = 45 //nup	nuru ASCII/ANSI palette files
-	SMPTE_DPX            FileType = 46 //SMPTE DPX image
-	OPEN_EXR             FileType = 47 //OpenEXR image
-	BPG                  FileType = 48 //Better Portable Graphics format
-	JPEG_RAW             FileType = 49 //JPEG raw or in the JFIF or Exif file format
-	JPEG_2000            FileType = 50 //JPEG 2000 format
-	QUI                  FileType = 51 //The “Quite OK Image Format”
-	IIF_ILBM             FileType = 52 //IFF Interleaved Bitmap Image
-	IIF_VOICE            FileType = 53 //IFF 8-Bit Sampled Voice
-	IIF_AMIGA_CB         FileType = 54 //Amiga Contiguous Bitmap
-	IIF_ANI_BMP          FileType = 55 //IFF Animated Bitmap
-	IIF_ANI_CEL          FileType = 56 //IFF CEL Animation
-	IIF_FAX_IMG          FileType = 57 //IFF Facsimile Image
-	IIF_FT               FileType = 58 //IFF Formatted Text
-	IIF_MUS_SCORE_SIMPLE FileType = 59 //IFF Simple Musical Score
-	IIF_MUS_SCORE        FileType = 60 //IFF Musical Score
-	IIF_YUV_IMAGE        FileType = 61 //IFF YUV Image
-	IIF_AMIGA_FVM        FileType = 62 //Amiga Fantavision Movie
-	IIF_AIFF             FileType = 63 //Audio Interchange File Format
-	LZ                   FileType = 64 //lzip compressed file
-	CPIO                 FileType = 65 //cpio archive file
-	DOS_MZ               FileType = 66 //DOS MZ executable and its descendants (including NE and PE)
-	SMART_SNIFF          FileType = 67 //SmartSniff Packets File
-	DOS_ZM               FileType = 68 //DOS ZM executable and its descendants (rare)
-	ZIP                  FileType = 69 //zip file format and formats based on it, such as EPUB, JAR, ODF, OOXML
-	RAR_V1               FileType = 70 //Roshal ARchive compressed archive v1.50 onwards
-	RAR_V5               FileType = 71 //Roshal ARchive compressed archive v5.00 onwards
-	ELF                  FileType = 72 //Executable and Linkable Format
-	PNG                  FileType = 73 //Image encoded in the Portable Network Graphics format
-	HDF4                 FileType = 75 //Data stored in version 4 of the Hierarchical Data Format
-	HDF5                 FileType = 76 //Data stored in version 5 of the Hierarchical Data Format
-	COM                  FileType = 77 //CP/M 3 and higher with overlays
-	JAVA_CLASS           FileType = 78 //Java class file, Mach-O Fat Binary
-	UTF8_TXT             FileType = 79 //UTF-8 byte order mark, commonly seen in text files
+	SHEBANG              FileType = 1   //Script or data to be passed to the program following the shebang (#!)
+	CLARIS_WORKS         FileType = 2   //Claris Works word processing doc
+	LOTUS_123_V1         FileType = 3   //Lotus 1-2-3 spreadsheet (v1) file
+	LOTUS_123_V3         FileType = 4   //Lotus 1-2-3 spreadsheet (v3) file
+	LOTUS_123_V4_V5      FileType = 5   //Lotus 1-2-3 spreadsheet (v4, v5) file
+	LOTUS_123_V9         FileType = 6   //Lotus 1-2-3 spreadsheet (v9) file
+	AMIGA_HUNK_EXE       FileType = 7   //Amiga Hunk executable file
+	QUARK_EXPRESS        FileType = 8   //Quark Express document
+	PASSWORD_GORILLA     FileType = 9   //Password Gorilla Password Database
+	LIBPCAP              FileType = 10  //Libpcap File Format
+	LIBPCAP_NS           FileType = 11  //Libpcap File Format (nanosecond-resolution)
+	PCAPNPG              FileType = 12  //PCAP Next Generation Dump File Format
+	RPM                  FileType = 13  //RedHat Package Manager (RPM) package
+	SQLITE3              FileType = 14  //SQLite Database
+	AMAZON_KINDLE_UP     FileType = 15  //Amazon Kindle Update Package
+	DOOM_WAD             FileType = 16  //internal WAD (main resource file of Doom)
+	ZERO                 FileType = 17  //IBM Storyboard bitmap file, Windows Program Information File, Mac Stuffit Self-Extracting Archive, IRIS OCR data file
+	PALM_PILOT           FileType = 18  //PalmPilot Database/Document File
+	PALM_DSK_CALENDAR    FileType = 19  //Palm Desktop Calendar Archive
+	PALM_DSK_TODO        FileType = 20  //Palm Desktop To Do Archive
+	PALM_DSK_CALENDAR2   FileType = 21  //Palm Desktop Calendar Archive
+	TELEGRAM_DSK         FileType = 22  //Telegram Desktop File
+	TELEGRAM_DSK_ENC     FileType = 23  //Telegram Desktop Encrypted File
+	PALM_DSK_DATA        FileType = 24  //Palm Desktop Data File (Access format)
+	ICON                 FileType = 25  //Computer icon encoded in ICO file format
+	APPLE_ICON_FORMAT    FileType = 26  //Apple Icon Image format
+	THREE_GPP            FileType = 27  //3rd Generation Partnership Project 3GPP and 3GPP2 multimedia files
+	HEIC                 FileType = 28  //High Efficiency Image Container (HEIC)
+	Z_LZW                FileType = 29  //compressed file (often tar zip) using Lempel-Ziv-Welch algorithm
+	Z_LZH                FileType = 30  //Compressed file (often tar zip) using LZH algorithm
+	LZH0                 FileType = 31  //Lempel Ziv Huffman archive file Method 0 (No compression)
+	LZH5                 FileType = 32  //Lempel Ziv Huffman archive file Method 5 (8 KiB sliding window)
+	AMI_BACK             FileType = 33  //AmiBack Amiga Backup data file
+	AMI_BACK_IDX         FileType = 34  //AmiBack Amiga Backup index file
+	BPLIST               FileType = 35  //Binary Property List file
+	BZ2                  FileType = 36  //Compressed file using Bzip2 algorithm
+	GIF                  FileType = 37  //Image file encoded in the Graphics Interchange Format (GIF)
+	TIFF                 FileType = 38  //Tagged Image File Format (TIFF)
+	BIG_TIFF             FileType = 39  //BigTIFF
+	CANON_RAW_V2         FileType = 40  //Canon RAW Format Version 2 Canon's RAW format is based on TIFF
+	KODAK_CIN            FileType = 41  //Kodak Cineon image
+	RNC_V1               FileType = 42  //Compressed file using Rob Northen Compression (version 1) algorithm
+	RNC_V2               FileType = 43  //Compressed file using Rob Northen Compression (version 2) algorithm
+	NURU_IMAGE           FileType = 44  //nuru ASCII/ANSI image files
+	NURU_PALETTE         FileType = 45  //nup	nuru ASCII/ANSI palette files
+	SMPTE_DPX            FileType = 46  //SMPTE DPX image
+	OPEN_EXR             FileType = 47  //OpenEXR image
+	BPG                  FileType = 48  //Better Portable Graphics format
+	JPEG_RAW             FileType = 49  //JPEG raw or in the JFIF or Exif file format
+	JPEG_2000            FileType = 50  //JPEG 2000 format
+	QUI                  FileType = 51  //The “Quite OK Image Format”
+	IIF_ILBM             FileType = 52  //IFF Interleaved Bitmap Image
+	IIF_VOICE            FileType = 53  //IFF 8-Bit Sampled Voice
+	IIF_AMIGA_CB         FileType = 54  //Amiga Contiguous Bitmap
+	IIF_ANI_BMP          FileType = 55  //IFF Animated Bitmap
+	IIF_ANI_CEL          FileType = 56  //IFF CEL Animation
+	IIF_FAX_IMG          FileType = 57  //IFF Facsimile Image
+	IIF_FT               FileType = 58  //IFF Formatted Text
+	IIF_MUS_SCORE_SIMPLE FileType = 59  //IFF Simple Musical Score
+	IIF_MUS_SCORE        FileType = 60  //IFF Musical Score
+	IIF_YUV_IMAGE        FileType = 61  //IFF YUV Image
+	IIF_AMIGA_FVM        FileType = 62  //Amiga Fantavision Movie
+	IIF_AIFF             FileType = 63  //Audio Interchange File Format
+	LZ                   FileType = 64  //lzip compressed file
+	CPIO                 FileType = 65  //cpio archive file
+	DOS_MZ               FileType = 66  //DOS MZ executable and its descendants (including NE and PE)
+	SMART_SNIFF          FileType = 67  //SmartSniff Packets File
+	DOS_ZM               FileType = 68  //DOS ZM executable and its descendants (rare)
+	ZIP                  FileType = 69  //zip file format and formats based on it, such as EPUB, JAR, ODF, OOXML
+	RAR_V1               FileType = 70  //Roshal ARchive compressed archive v1.50 onwards
+	RAR_V5               FileType = 71  //Roshal ARchive compressed archive v5.00 onwards
+	ELF                  FileType = 72  //Executable and Linkable Format
+	PNG                  FileType = 73  //Image encoded in the Portable Network Graphics format
+	HDF4                 FileType = 75  //Data stored in version 4 of the Hierarchical Data Format
+	HDF5                 FileType = 76  //Data stored in version 5 of the Hierarchical Data Format
+	COM                  FileType = 77  //CP/M 3 and higher with overlays
+	JAVA_CLASS           FileType = 78  //Java class file, Mach-O Fat Binary
+	UTF8_TXT             FileType = 79  //UTF-8 byte order mark, commonly seen in text files
+	UTF16LE_TXT          FileType = 80  //UTF-16LE byte order mark, commonly seen in text files.
+	UTF16BE_TXT          FileType = 81  //UTF-16BE byte order mark, commonly seen in text files.
+	UTF32LE_TXT          FileType = 82  //UTF-32LE byte order mark for text
+	UTF32BE_TXT          FileType = 83  //UTF-32BE byte order mark for text
+	UTF7_TXT             FileType = 84  //UTF-7 byte order mark for text
+	SCSU_TXT             FileType = 85  //SCSU byte order mark for text
+	EBCDIC_TXT           FileType = 86  //UTF-EBCDIC byte order mark for text[
+	MACHO_BIN32          FileType = 87  //Mach-O binary (32-bit)
+	MACHO_BIN64          FileType = 88  //Mach-O binary (64-bit)
+	JKS                  FileType = 89  //JKS Javakey Store
+	MACHO_BIN32R         FileType = 90  //Mach-O binary (reverse byte ordering scheme, 32-bit)
+	MACHO_BIN64R         FileType = 91  //Mach-O binary (reverse byte ordering scheme, 64-bit)
+	PS                   FileType = 92  //PostScript document
+	EPS3                 FileType = 93  //Encapsulated PostScript file version 3.0
+	EPS31                FileType = 94  //Encapsulated PostScript file version 3.1
+	CHM                  FileType = 95  //MS Windows HtmlHelp Data
+	HLP                  FileType = 96  //Windows 3.x/95/98 Help file
+	PDF                  FileType = 97  //PDF document
+	ASF                  FileType = 98  //Advanced Systems Format
+	MSSDI                FileType = 99  //System Deployment Image, a disk image format used by Microsoft
+	OGG                  FileType = 100 //Ogg, an open source media container format
+	PSD                  FileType = 101 //Photoshop Document file, Adobe Photoshop's native file format
+	WAV                  FileType = 102 //Waveform Audio File Format[
+	AVI                  FileType = 103 //Audio Video Interleave video format
+	MP3                  FileType = 104 //MPEG-1 Layer 3 file without an ID3 tag or with an ID3v1 tag (which is appended at the end of the file)
+	MP3V2                FileType = 105 //MP3 file with an ID3v2 container
+	BMP                  FileType = 106 //BMP file, a bitmap format used mostly in the Windows world
+	ISO                  FileType = 107 //ISO9660 CD/DVD image file
+	CDI                  FileType = 108 //CD-i CD image file
+	MGW                  FileType = 109 //Nintendo Game & Watch image file
+	NES                  FileType = 110 //Nintendo Entertainment System image file
+	D64                  FileType = 111 //Commodore 64 1541 disk image (D64 format)
+	G64                  FileType = 112 //Commodore 64 1541 disk image (G64 format)
+	D81                  FileType = 113 //Commodore 64 1581 disk image (D81 format)
+	T64                  FileType = 114 //Commodore 64 tape image
+	CRT64                FileType = 115 //Commodore 64 cartridge image
+	FITS                 FileType = 116 //Flexible Image Transport System (FITS)
+	FLAC                 FileType = 117 //Free Lossless Audio Codec
+	MIDI                 FileType = 118 //MIDI sound file
+	MSCOM                FileType = 119 //Compound File Binary Format, a container format defined by Microsoft COM. It can contain the equivalent of files and directories. It is used by Windows Installer and for documents in older versions of Microsoft Office. It can be used by other programs as well that rely on the COM and OLE API's.
+	DEX                  FileType = 120 //Dalvik Executable
+	VDMK                 FileType = 121 //VMDK files
 )
 
 type AnyBytesInMiddle struct {
@@ -90,6 +132,10 @@ type AnyBytesInMiddle struct {
 	AnyBytesOffset uint8
 	AnyBytesLength uint8
 	Suffix         []byte
+}
+type AnyBytesInMiddleMask struct {
+	Offset uint8
+	Length uint8
 }
 
 type ByteSequence interface {
@@ -444,6 +490,167 @@ var knownSignatures1 = map[FileType]HexSignature[[]byte, uint64, string]{
 		Description:   "Java class file, Mach-O Fat Binary",
 		Tag:           JAVA_CLASS,
 	},
+	EBCDIC_TXT: {
+		Bytes:         []byte{0xDD, 0x73, 0x66, 0x73},
+		Offset:        0,
+		NameExtension: "",
+		Description:   "UTF-EBCDIC byte order mark for text",
+		Tag:           EBCDIC_TXT,
+	},
+	JKS: {
+		Bytes:         []byte{0xFE, 0xED, 0xFE, 0xED},
+		Offset:        0,
+		NameExtension: "",
+		Description:   "JKS Javakey Store",
+		Tag:           JKS,
+	},
+	MACHO_BIN32R: {
+		Bytes:         []byte{0xCE, 0xFA, 0xED, 0xFE},
+		Offset:        0,
+		NameExtension: "",
+		Description:   "Mach-O binary (reverse byte ordering scheme, 32-bit)",
+		Tag:           MACHO_BIN32R,
+	},
+	MACHO_BIN64R: {
+		Bytes:         []byte{0xCF, 0xFA, 0xED, 0xFE},
+		Offset:        0,
+		NameExtension: "",
+		Description:   "Mach-O binary (reverse byte ordering scheme, 64-bit)",
+		Tag:           MACHO_BIN64R,
+	},
+	PS: {
+		Bytes:         []byte{0x25, 0x21, 0x50, 0x53},
+		Offset:        0,
+		NameExtension: "ps",
+		Description:   "PostScript document",
+		Tag:           PS,
+	},
+	CHM: {
+		Bytes:         []byte{0x49, 0x54, 0x53, 0x46, 0x03, 0x00, 0x00, 0x00, 0x60, 0x00, 0x00, 0x00},
+		Offset:        0,
+		NameExtension: "chm",
+		Description:   "MS Windows HtmlHelp Data",
+		Tag:           CHM,
+	},
+	HLP: {
+		Bytes:         []byte{0x3F, 0x5F},
+		Offset:        0,
+		NameExtension: "hlp",
+		Description:   "Windows 3.x/95/98 Help file",
+		Tag:           HLP,
+	},
+	PDF: {
+		Bytes:         []byte{0x25, 0x50, 0x44, 0x46, 0x2D},
+		Offset:        0,
+		NameExtension: "pdf",
+		Description:   "PDF document",
+		Tag:           PDF,
+	},
+	MSSDI: {
+		Bytes:         []byte{0x24, 0x53, 0x44, 0x49, 0x30, 0x30, 0x30, 0x31},
+		Offset:        0,
+		NameExtension: "",
+		Description:   "System Deployment Image, a disk image format used by Microsoft",
+		Tag:           MSSDI,
+	},
+	PSD: {
+		Bytes:         []byte{0x38, 0x42, 0x50, 0x53},
+		Offset:        0,
+		NameExtension: "psd",
+		Description:   "Photoshop Document file, Adobe Photoshop's native file format",
+		Tag:           PSD,
+	},
+	MP3V2: {
+		Bytes:         []byte{0x49, 0x44, 0x33},
+		Offset:        0,
+		NameExtension: "mp3",
+		Description:   "MP3 file with an ID3v2 container",
+		Tag:           MP3V2,
+	},
+	CDI: {
+		Bytes:         []byte{0x43, 0x44, 0x30, 0x30, 0x31},
+		Offset:        0x5EAC9,
+		NameExtension: "cdi",
+		Description:   "CD-i CD image file",
+		Tag:           CDI,
+	},
+	MGW: {
+		Bytes:         []byte{0x6D, 0x61, 0x69, 0x6E, 0x2E, 0x62, 0x73},
+		Offset:        0,
+		NameExtension: "mgw",
+		Description:   "Nintendo Game & Watch image file",
+		Tag:           MGW,
+	},
+	NES: {
+		Bytes:         []byte{0x4E, 0x45, 0x53},
+		Offset:        0,
+		NameExtension: "nes",
+		Description:   "Nintendo Entertainment System image file",
+		Tag:           NES,
+	},
+	D64: {
+		Bytes:         []byte{0xA0, 0x32, 0x41, 0xA0, 0xA0, 0xA0},
+		Offset:        0x165A4,
+		NameExtension: "d64",
+		Description:   "Commodore 64 1541 disk image (D64 format)",
+		Tag:           D64,
+	},
+	G64: {
+		Bytes:         []byte{0x47, 0x53, 0x52, 0x2D, 0x31, 0x35, 0x34, 0x31},
+		Offset:        0,
+		NameExtension: "g64",
+		Description:   "Commodore 64 1541 disk image (G64 format)",
+		Tag:           G64,
+	},
+	// D81: {
+	// 	Bytes:         []byte{0xA0, 0x33, 0x44, 0xA0, 0xA0},
+	// 	Offset:        0x61819,
+	// 	NameExtension: "d81",
+	// 	Description:   "Commodore 64 1581 disk image (D81 format)",
+	// 	Tag:           D81,
+	// },
+	T64: {
+		Bytes:         []byte{0x43, 0x36, 0x34, 0x20, 0x74, 0x61, 0x70, 0x65, 0x20, 0x69, 0x6D, 0x61, 0x67, 0x65, 0x20, 0x66, 0x69, 0x6C, 0x65},
+		Offset:        0,
+		NameExtension: "t64",
+		Description:   "Commodore 64 tape image",
+		Tag:           T64,
+	},
+	CRT64: {
+		Bytes:         []byte{0x43, 0x36, 0x34, 0x20, 0x43, 0x41, 0x52, 0x54, 0x52, 0x49, 0x44, 0x47, 0x45, 0x20, 0x20, 0x20},
+		Offset:        0,
+		NameExtension: "crt",
+		Description:   "Commodore 64 cartridge image",
+		Tag:           CRT64,
+	},
+	FITS: {
+		Bytes:         []byte{0x53, 0x49, 0x4D, 0x50, 0x4C, 0x45, 0x20, 0x20, 0x3D, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x54},
+		Offset:        0,
+		NameExtension: "fits",
+		Description:   "Flexible Image Transport System (FITS)",
+		Tag:           FITS,
+	},
+	FLAC: {
+		Bytes:         []byte{0x66, 0x4C, 0x61, 0x43},
+		Offset:        0,
+		NameExtension: "flac",
+		Description:   "Free Lossless Audio Codec",
+		Tag:           FLAC,
+	},
+	DEX: {
+		Bytes:         []byte{0x64, 0x65, 0x78, 0x0A, 0x30, 0x33, 0x35, 0x00},
+		Offset:        0,
+		NameExtension: "dex",
+		Description:   "Dalvik Executable",
+		Tag:           DEX,
+	},
+	VDMK: {
+		Bytes:         []byte{0x4B, 0x44, 0x4D},
+		Offset:        0,
+		NameExtension: "vmdk",
+		Description:   "VMDK files",
+		Tag:           VDMK,
+	},
 }
 
 var knownSignatures2 = map[FileType]HexSignature[[]byte, uint64, []string]{
@@ -503,6 +710,55 @@ var knownSignatures2 = map[FileType]HexSignature[[]byte, uint64, []string]{
 		Description:   "Data stored in version 4 of the Hierarchical Data Format",
 		Tag:           HDF4,
 	},
+	EPS3: {
+		Bytes:         []byte{0x25, 0x21, 0x50, 0x53, 0x2D, 0x41, 0x64, 0x6F, 0x62, 0x65, 0x2D, 0x33, 0x2E, 0x30, 0x20, 0x45, 0x50, 0x53, 0x46, 0x2D, 0x33, 0x2E, 0x30},
+		Offset:        0,
+		NameExtension: []string{"eps", "epsf"},
+		Description:   "Encapsulated PostScript file version 3.0",
+		Tag:           EPS3,
+	},
+	EPS31: {
+		Bytes:         []byte{0x25, 0x21, 0x50, 0x53, 0x2D, 0x41, 0x64, 0x6F, 0x62, 0x65, 0x2D, 0x33, 0x2E, 0x31, 0x20, 0x45, 0x50, 0x53, 0x46, 0x2D, 0x33, 0x2E, 0x30},
+		Offset:        0,
+		NameExtension: []string{"eps", "epsf"},
+		Description:   "Encapsulated PostScript file version 3.1",
+		Tag:           EPS31,
+	},
+	ASF: {
+		Bytes:         []byte{0x30, 0x26, 0xB2, 0x75, 0x8E, 0x66, 0xCF, 0x11, 0xA6, 0xD9, 0x00, 0xAA, 0x00, 0x62, 0xCE, 0x6C},
+		Offset:        0,
+		NameExtension: []string{"asf", "wma", "wmv"},
+		Description:   "Advanced Systems Format",
+		Tag:           ASF,
+	},
+	OGG: {
+		Bytes:         []byte{0x4F, 0x67, 0x67, 0x53},
+		Offset:        0,
+		NameExtension: []string{"ogg", "oga", "ogv"},
+		Description:   "Ogg, an open source media container format",
+		Tag:           OGG,
+	},
+	BMP: {
+		Bytes:         []byte{0x42, 0x4D},
+		Offset:        0,
+		NameExtension: []string{"bmp", "dib"},
+		Description:   "BMP file, a bitmap format used mostly in the Windows world",
+		Tag:           BMP,
+	},
+	MIDI: {
+		Bytes:         []byte{0x4D, 0x54, 0x68, 0x64},
+		Offset:        0,
+		NameExtension: []string{"mid", "midi"},
+		Description:   "MIDI sound file",
+		Tag:           MIDI,
+	},
+	MSCOM: {
+		Bytes:         []byte{0xD0, 0xCF, 0x11, 0xE0, 0xA1, 0xB1, 0x1A, 0xE1},
+		Offset:        0,
+		NameExtension: []string{"doc", "xls", "ppt", "msi", "msg"},
+		Description:   "Compound File Binary Format, a container format defined by Microsoft COM. It can contain the equivalent of files and directories. It is used by Windows Installer and for documents in older versions of Microsoft Office. It can be used by other programs as well that rely on the COM and OLE API's.",
+		Tag:           MSCOM,
+	},
 }
 
 var knownSignatures3 = map[FileType]HexSignature[OneOfByteSequences, uint64, string]{
@@ -555,6 +811,29 @@ var knownSignatures3 = map[FileType]HexSignature[OneOfByteSequences, uint64, str
 		NameExtension: "dpx",
 		Description:   "SMPTE DPX image",
 		Tag:           SMPTE_DPX,
+	},
+	UTF7_TXT: {
+		Bytes: [][]byte{
+			{0x2B, 0x2F, 0x76, 0x38},
+			{0x2B, 0x2F, 0x76, 0x39},
+			{0x2B, 0x2F, 0x76, 0x2B},
+			{0x2B, 0x2F, 0x76, 0x2F},
+		},
+		Offset:        0,
+		NameExtension: "",
+		Description:   "UTF-7 byte order mark for text",
+		Tag:           UTF7_TXT,
+	},
+	MP3: {
+		Bytes: [][]byte{
+			{0xFF, 0xFB},
+			{0xFF, 0xF3},
+			{0xFF, 0xF2},
+		},
+		Offset:        0,
+		NameExtension: "mp3",
+		Description:   "MPEG-1 Layer 3 file without an ID3 tag or with an ID3v1 tag (which is appended at the end of the file)",
+		Tag:           MP3,
 	},
 }
 
@@ -626,6 +905,30 @@ var knownSignatures5 = map[FileType]HexSignature[AnyBytesInMiddle, uint64, []str
 		NameExtension: []string{"jpg", "jpeg"},
 		Description:   "JPEG raw or in the JFIF or Exif file format",
 		Tag:           JPEG_RAW,
+	},
+	WAV: {
+		Bytes: AnyBytesInMiddle{
+			Prefix:         []byte{0x52, 0x49, 0x46, 0x46},
+			AnyBytesOffset: 4,
+			AnyBytesLength: 4,
+			Suffix:         []byte{0x57, 0x41, 0x56, 0x45},
+		},
+		Offset:        0,
+		NameExtension: []string{"wav"},
+		Description:   "Waveform Audio File Format",
+		Tag:           WAV,
+	},
+	AVI: {
+		Bytes: AnyBytesInMiddle{
+			Prefix:         []byte{0x52, 0x49, 0x46, 0x46},
+			AnyBytesOffset: 4,
+			AnyBytesLength: 4,
+			Suffix:         []byte{0x41, 0x56, 0x49, 0x20},
+		},
+		Offset:        0,
+		NameExtension: []string{"avi"},
+		Description:   "Audio Video Interleave video format",
+		Tag:           AVI,
 	},
 }
 
@@ -799,9 +1102,68 @@ var knownSignatures8 = map[FileType]HexSignature[[]byte, uint64, *regexp.Regexp]
 		Description:   "UTF-8 byte order mark, commonly seen in text files",
 		Tag:           UTF8_TXT,
 	},
+	UTF16LE_TXT: {
+		Bytes:         []byte{0xFF, 0xFE},
+		Offset:        0,
+		NameExtension: regexp.MustCompile("(txt|.*)"),
+		Description:   "UTF-16LE byte order mark, commonly seen in text files",
+		Tag:           UTF16LE_TXT,
+	},
+	UTF16BE_TXT: {
+		Bytes:         []byte{0xFE, 0xFF},
+		Offset:        0,
+		NameExtension: regexp.MustCompile("(txt|.*)"),
+		Description:   "UTF-16BE byte order mark, commonly seen in text files",
+		Tag:           UTF16BE_TXT,
+	},
+	UTF32LE_TXT: {
+		Bytes:         []byte{0xFF, 0xFE, 0x00, 0x00},
+		Offset:        0,
+		NameExtension: regexp.MustCompile("(txt|.*)"),
+		Description:   "UTF-32LE byte order mark for text",
+		Tag:           UTF32LE_TXT,
+	},
+	UTF32BE_TXT: {
+		Bytes:         []byte{0x00, 0x00, 0xFE, 0xFF},
+		Offset:        0,
+		NameExtension: regexp.MustCompile("(txt|.*)"),
+		Description:   "UTF-32BE byte order mark for text",
+		Tag:           UTF32BE_TXT,
+	},
+	SCSU_TXT: {
+		Bytes:         []byte{0x0E, 0xFE, 0xFF},
+		Offset:        0,
+		NameExtension: regexp.MustCompile("(txt|.*)"),
+		Description:   "SCSU byte order mark for text",
+		Tag:           SCSU_TXT,
+	},
 }
 
-var knownSignatures9 = map[FileType]HexSignature[[]byte, uint64, []string]{
+var knownSignatures9 = map[FileType]HexSignature[[]byte, OffsetMultiply, string]{
+	MACHO_BIN32: {
+		Bytes:         []byte{0xFE, 0xED, 0xFA, 0xCE},
+		Offset:        []uint64{0, 0x1000},
+		NameExtension: "",
+		Description:   "Mach-O binary (32-bit)",
+		Tag:           MACHO_BIN32,
+	},
+	MACHO_BIN64: {
+		Bytes:         []byte{0xFE, 0xED, 0xFA, 0xCF},
+		Offset:        []uint64{0, 0x1000},
+		NameExtension: "",
+		Description:   "Mach-O binary (64-bit)",
+		Tag:           MACHO_BIN64,
+	},
+	ISO: {
+		Bytes:         []byte{0x43, 0x44, 0x30, 0x30, 0x31},
+		Offset:        []uint64{0x8001, 0x8801, 0x9001},
+		NameExtension: "iso",
+		Description:   "UTF-8 byte order mark, commonly seen in text files",
+		Tag:           ISO,
+	},
+}
+
+var knownSignatures10 = map[FileType]HexSignature[[]byte, uint64, []string]{
 	ZERO: {
 		Bytes:         []byte{0x00},
 		Offset:        0,
