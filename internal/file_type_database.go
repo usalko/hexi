@@ -122,9 +122,201 @@ const (
 	FITS                 FileType = 116 //Flexible Image Transport System (FITS)
 	FLAC                 FileType = 117 //Free Lossless Audio Codec
 	MIDI                 FileType = 118 //MIDI sound file
-	MSCOM                FileType = 119 //Compound File Binary Format, a container format defined by Microsoft COM. It can contain the equivalent of files and directories. It is used by Windows Installer and for documents in older versions of Microsoft Office. It can be used by other programs as well that rely on the COM and OLE API's.
+	MSCOM                FileType = 119 //Compound File Binary Format, a container format defined by Microsoft COM. It can contain the equivalent of files and directories. It is used by Windows Installer and for documents in older versions of Microsoft Office. It can be used by other programs as well that rely on the COM and OLE API's
 	DEX                  FileType = 120 //Dalvik Executable
 	VDMK                 FileType = 121 //VMDK files
+	//	23 20 44 69 73 6B 20 44 65 73 63 72 69 70 74 6F	0	vmdk	VMware 4 Virtual Disk description file (split disk)
+	//	43 72 32 34	0	crx	Google Chrome extension or packaged app
+	//	41 47 44 33	0	fh8	FreeHand 8 document
+	//	05 07 00 00 42 4F 42 4F 05 07 00 00 00 00 00 00 00 00 00 00 00 01	0	cwk	AppleWorks 5 document
+	//	06 07 E1 00 42 4F 42 4F 06 07 E1 00 00 00 00 00 00 00 00 00 00 01	0	cwk AppleWorks 6 document
+	//	[45 52 02 00 00 00] [8B 45 52 02 00 00 00]	0	toast	Roxio Toast disc image file
+	//	6B 6F 6C 79	end–512	dmg	Apple Disk Image file
+	//	78 61 72 21	0	xar	eXtensible ARchive format
+	//	50 4D 4F 43 43 4D 4F 43	0	dat	Windows Files And Settings Transfer Repository[ See also USMT 3.0 (Win XP) and USMT 4.0 (Win 7) User Guides
+	//	4E 45 53 1A	0	nes	Nintendo Entertainment System ROM file
+	//	[75 73 74 61 72 00 30] [30 75 73 74 61 72 20 20 00]	257	tar	tar archive
+	//	4F 41 52 ??	0	oar	OAR file archive format, where ?? is the format version
+	//	74 6F 78 33	0	tox	Open source portable voxel file
+	//	4D 4C 56 49	0	MLV	Magic Lantern Video file
+	//	[44 43 4D 01 50 41 33 30] [50 41 33 30]	0		Windows Update Binary Delta Compression file
+	//	37 7A BC AF 27 1C	0	7z	7-Zip File Format
+	//	1F 8B	0	gz, tar.gz	GZIP compressed file
+	//	FD 37 7A 58 5A 00	0	xz, tar.xz	XZ compression utility using LZMA2 compression
+	//	04 22 4D 18	0	lz4	LZ4 Frame Format Remark: LZ4 block format does not offer any magic bytes
+	//	4D 53 43 46	0	cab	Microsoft Cabinet file
+	//	53 5A 44 44 88 F0 27 33	0	??_	Microsoft compressed file in Quantum format, used prior to Windows XP. File can be decompressed using Extract.exe or Expand.exe distributed with earlier versions of Windows. After compression, the last character of the original filename extension is replaced with an underscore, e.g. ‘Setup.exe’ becomes ‘Setup.ex_’
+	//	46 4C 49 46	0	flif	Free Lossless Image Format
+	//	1A 45 DF A3	0	mkv, mka, mks, mk3d, webm	Matroska media container, including WebM
+	//	4D 49 4C 20	0	stg	"SEAN : Session Analysis" Training file. Also used in compatible software "Rpw : Rowperfect for Windows" and "RP3W : ROWPERFECT3 for Windows".
+	//	41 54 26 54 46 4F 52 4D ?? ?? ?? ?? 44 4A 56	0	djvu, djv	DjVu document the following byte is either 55 (U) for single-page or 4D (M) for multi-page documents.
+	//	30 82	0	der	DER encoded X.509 certificate
+	//	2D 2D 2D 2D 2D 42 45 47 49 4E 20 43 45 52 54 49 46 49 43 41 54 45 2D 2D 2D 2D 2D	0	crt, pem	PEM encoded X.509 certificate
+	//	2D 2D 2D 2D 2D 42 45 47 49 4E 20 43 45 52 54 49 46 49 43 41 54 45 20 52 45 51 55 45 53 54 2D 2D 2D 2D 2D	0	csr, pem	PEM encoded X.509 Certificate Signing Request
+	//	2D 2D 2D 2D 2D 42 45 47 49 4E 20 50 52 49 56 41 54 45 20 4B 45 59 2D 2D 2D 2D 2D	0	key, pem	PEM encoded X.509 PKCS#8 private key
+	//	2D 2D 2D 2D 2D 42 45 47 49 4E 20 44 53 41 20 50 52 49 56 41 54 45 20 4B 45 59 2D 2D 2D 2D 2D	0	key, pem	PEM encoded X.509 PKCS#1 DSA private key
+	//	2D 2D 2D 2D 2D 42 45 47 49 4E 20 52 45 41 20 50 52 49 56 41 54 45 20 4B 45 59 2D 2D 2D 2D 2D	0	key, pem	PEM encoded X.509 PKCS#1 RSA private key
+	//	50 75 54 54 59 2D 55 73 65 72 2D 4B 65 79 2D 46 69 6C 65 2D 32 3A	0	ppk	PuTTY private key file version 2
+	//	50 75 54 54 59 2D 55 73 65 72 2D 4B 65 79 2D 46 69 6C 65 2D 33 3A	0	ppk	PuTTY private key file version 3
+	//	2D 2D 2D 2D 2D 42 45 47 49 4E 20 4F 50 45 4E 53 53 48 20 50 52 49 56 41 54 45 20 4B 45 59 2D 2D 2D 2D 2D	0		OpenSSH private key file
+	//	2D 2D 2D 2D 2D 42 45 47 49 4E 20 53 53 48 32 20 4B 45 59 2D 2D 2D 2D 2D	0	pub	OpenSSH public key file
+	//	44 49 43 4D	128	dcm	DICOM Medical File Format
+	//	77 4F 46 46	0	woff	WOFF File Format 1.0
+	//	77 4F 46 32	0	woff2	WOFF File Format 2.0
+	//	3C 3F 78 6D 6C 20	0, after BOM	xml	XML (UTF-8 or other 8-bit encodings)
+	//	3C 00 3F 00 78 00 6D 00 6C 00 20	0, after BOM	xml	XML (UTF-16LE)
+	//	00 3C 00 3F 00 78 00 6D 00 6C 00 20	0, after BOM	xml	XML (UTF-16BE)
+	//	3C 00 00 00 3F 00 00 00 78 00 00 00 6D 00 00 00 6C 00 00 00 20 00 00 00	0, after BOM	xml	XML (UTF-32LE)
+	//	00 00 00 3C 00 00 00 3F 00 00 00 78 00 00 00 6D 00 00 00 6C 00 00 00 20	0, after BOM	xml	XML (UTF-32BE)
+	//	4C 6F A7 94 93 40	0, after BOM	xml	XML (EBCDIC)
+	//	00 61 73 6D	0	wasm	WebAssembly binary format
+	//	CF 84 01	0	lep	Lepton compressed JPEG image
+	//	[43 57 53] [46 57 53]	0	swf	Adobe Flash .swf
+	//	21 3C 61 72 63 68 3E 0A	0	deb	linux deb file
+	//	52 49 46 46 ?? ?? ?? ?? 57 45 42 50	0	webp	Google WebP image file, where ?? ?? ?? ?? is the file size. More information on WebP File Header
+	//	27 05 19 56	0		U-Boot / uImage. Das U-Boot Universal Boot Loader
+	//	7B 5C 72 74 66 31	0	rtf	Rich Text Format
+	//	54 41 50 45	0		Microsoft Tape Format
+	//	47	0, 0xBC, 0x178, ..., (every 188th byte)	ts, tsv, tsa, mpg, mpeg	MPEG Transport Stream (MPEG-2 Part 1)
+	//	00 00 01 BA	0	m2p, vob, mpg, mpeg	MPEG Program Stream (MPEG-1 Part 1 (essentially identical) and MPEG-2 Part 1)
+	//	00 00 01 B3	0	mpg, mpeg	MPEG-1 video and MPEG-2 video (MPEG-1 Part 2 and MPEG-2 Part 2)
+	//	66 74 79 70 69 73 6F 6D	4	mp4	ISO Base Media file (MPEG-4)
+	//	66 74 79 70 4D 53 4E 56	4	mp4	MPEG-4 video file
+	//	78 01	0	zlib	No Compression (no preset dictionary)
+	//	78 5E	0	zlib	Best speed (no preset dictionary)
+	//	78 9C	0	zlib	Default Compression (no preset dictionary)
+	//	78 DA	0	zlib	Best Compression (no preset dictionary)
+	//	78 20	0	zlib	No Compression (with preset dictionary)
+	//	78 7D	0	zlib	Best speed (with preset dictionary)
+	//	78 BB	0	zlib	Default Compression (with preset dictionary)
+	//	78 F9	0	zlib	Best Compression (with preset dictionary)
+	//	62 76 78 32	bvx2	0	lzfse	LZFSE - Lempel-Ziv style data compression algorithm using Finite State Entropy coding. OSS by Apple.
+	//	4F 52 43	ORC	0	orc	Apache ORC (Optimized Row Columnar) file format
+	//	4F 62 6A 01	Obj␁	0	avro	Apache Avro binary file format
+	//	53 45 51 36	SEQ6	0	rc	RCFile columnar file format
+	//	3C 72 6F 62 6C 6F 78 21	<roblox!	0	rbxl	Roblox place file
+	//	65 87 78 56	e‡xV	0	p25, obt	PhotoCap Object Templates
+	//	55 55 AA AA	UUªª	0	pcv	PhotoCap Vector
+	//	78 56 34	xV4	0	pbt, pdt, pea, peb, pet, pgt, pict, pjt, pkt, pmt	PhotoCap Template
+	//	50 41 52 31	PAR1	0		Apache Parquet columnar file format
+	//	45 4D 58 32	EMX2	0	ez2	Emulator Emaxsynth samples
+	//	45 4D 55 33	EMU3	0	ez3, iso	Emulator III synth samples
+	//	1B 4C 75 61	␛Lua	0	luac	Lua bytecode[72]
+	//	[62 6F 6F 6B 00 00 00 00] [6D 61 72 6B 00 00 00 00]	book␀␀␀␀mark␀␀␀␀	0	alias	macOS file Alias (Symbolic link)
+	//	[5B 5A 6F 6E 65 54 72 61] [6E 73 66 65 72 5D]	[ZoneTransfer]	0	Identifier	Microsoft Zone Identifier for URL Security Zones
+	//	52 65 63 65 69 76 65 64 3A	Received:	0	eml	Email Message var5
+	//	20 02 01 62 A0 1E AB 07 02 00 00 00	␠␂␁b⍽␞«␇␂␀␀␀	0	tde	Tableau Datasource
+	//	37 48 03 02 00 00 00 00 58 35 30 39 4B 45 59	7H␃␂␀␀␀␀X509KEY	0	kdb	KDB file
+	//	85 ?? ?? 03	…??␃	0	pgp	PGP file
+	//	28 B5 2F FD	(µ/ý	0	zst	Zstandard compress
+	//	52 53 56 4B 44 41 54 41	RSVKDATA	0	rs	QuickZip rs compressed archive[79][80]
+	//	3A 29 0A	:)␊	0	sml	Smile file
+	//	4A 6F 79 21	Joy!	0		Preferred Executable Format
+	//	31 0A 30 30	1␊00	0	srt	SubRip File
+	//	34 12 AA 55	4␒ªU	0	vpk	VPK file, used to store game data for some Source Engine games
+	//	2A 2A 41 43 45 2A 2A	**ACE**	7	ace	ACE (compressed file format)[citation needed]
+	//	60 EA	`ê	0	arj	ARJ
+	//	49 53 63 28	ISc(	0	cab	InstallShield CAB Archive File
+	//	4B 57 41 4A	KWAJ	0	??_	Windows 3.1x Compressed File
+	//	53 5A 44 44	SZDD	0	??_	Windows 9x Compressed File
+	//	5A 4F 4F	ZOO	0	zoo	Zoo (file format)
+	//	50 31 0A	P1␊	0	pbm	Portable bitmap ASCII
+	//	50 34 0A	P4␊	0	pbm	Portable bitmap binary
+	//	50 32 0A	P2␊	0	pgm	Portable Gray Map ASCII
+	//	50 35 0A	P5␊	0	pgm	Portable Gray Map binary
+	//	50 33 0A	P3␊	0	ppm	Portable Pixmap ASCII
+	//	50 36 0A	P6␊	0	ppm	Portable Pixmap binary
+	//	D7 CD C6 9A	×ÍÆš	0	wmf	Windows Metafile
+	//	67 69 6D 70 20 78 63 66	gimp xcf	0	xcf	XCF (file format)
+	//	2F 2A 20 58 50 4D 20 2A 2F	/* XPM */	0	xpm	X PixMap
+	//	41 46 46	AFF	0	aff	Advanced Forensics Format
+	//	45 56 46 32	EVF2	0	Ex01	EnCase EWF version 2 format
+	//	45 56 46	EVF	0	e01	EnCase EWF version 1 format
+	//	51 46 49	QFI	0	qcow	qcow file format
+	//	52 49 46 46 ?? ?? ?? ?? 41 43 4F 4E	RIFF????ACON	0	ani	Animated cursor
+	//	52 49 46 46 ?? ?? ?? ?? 43 44 44 41	RIFF????CDDA	0	cda	.cda file
+	//	52 49 46 46 ?? ?? ?? ?? 51 4C 43 4D	RIFF????QLCM	0	qcp	Qualcomm PureVoice file format
+	//	52 49 46 58 ?? ?? ?? ?? 46 47 44 4D (big-endian)	RIFX????FGDM	0	dcr	Adobe Shockwave[81][82][83]
+	//	58 46 49 52 ?? ?? ?? ?? 4D 44 47 46 (little-endian)	XFIR????MDGF
+	//	52 49 46 58 ?? ?? ?? ?? 4D 56 39 33 (big-endian)	RIFX????MV93	0	dir, dxr, drx	Macromedia Director file format[84][82][83]
+	//	[58 46 49 52 ?? ?? ?? ?? 33 39 56 4D] [46 4C 56]	0	flv	Flash Video file
+	//	3C 3C 3C 20 4F 72 61 63 6C 65 20 56 4D 20 56 69 72 74 75 61 6C 42 6F 78 20 44 69 73 6B 20 49 6D 61 67 65 20 3E 3E 3E	0	vdi	VirtualBox Virtual Hard Disk file format
+	//	63 6F 6E 65 63 74 69 78	conectix	0	vhd	Windows Virtual PC Virtual Hard Disk file format[85]
+	//	76 68 64 78 66 69 6C 65	vhdxfile	0	vhdx	Windows Virtual PC Windows 8 Virtual Hard Disk file format
+	//	49 73 5A 21	IsZ!	0	isz	Compressed ISO image
+	//	44 41 41	DAA	0	daa	Direct Access Archive PowerISO
+	//	4C 66 4C 65	LfLe	0	evt	Windows Event Viewer file format
+	//	45 6C 66 46 69 6C 65	ElfFile	0	evtx	Windows Event Viewer XML file format
+	//	73 64 62 66	sdbf	8	sdb	Windows customized database
+	//	50 4D 43 43	PMCC	0	grp	Windows 3.x Program Manager Program Group file format
+	//	4B 43 4D 53	KCMS	0	icm	ICC profile
+	//	72 65 67 66	regf	0	dat, hiv	Windows Registry file
+	//	21 42 44 4E	!BDN	0	pst	Microsoft Outlook Personal Storage Table file
+	//	44 52 41 43 4F	DRACO	0	drc	3D model compressed with Google Draco[86]
+	//	47 52 49 42	GRIB	0	grib, grib2	Gridded data (commonly weather observations or forecasts) in the WMO GRIB or GRIB2 format[87]
+	//	42 4C 45 4E 44 45 52	BLENDER	0	blend	Blender File Format[88]
+	//	[00 00 00 0C 4A 58 4C 20 0D 0A 87 0A] [FF 0A]	␀␀␀␌JXL␠␍␊‡␊	0	jxl	Image encoded in the JPEG XL format
+	//	00 01 00 00 00	0	ttf, tte, dfont TrueType font
+	//	4F 54 54 4F	OTTO	0	otf	OpenType font
+	//	23 25 4D 6F 64 75 6C 65	#%Module	0		Modulefile for Environment Modules
+	//	4D 53 57 49 4D 00 00 00 D0 00 00 00 00	MSWIM␀␀␀Ð␀␀␀␀	0	wim, swm, esd	Windows Imaging Format file
+	//	21 2D 31 53 4C 4F 42 1F	!-1SLOB␟	0	slob	Slob (sorted list of blobs) is a read-only, compressed data store with dictionary-like interface[92]
+	//	AC ED	¬í	0		Serialized Java Data
+	//	43 72 65 61 74 69 76 65 20 56 6F 69 63 65 20 46 69 6C 65 1A 1A 00	Creative Voice File	0	voc	Creative Voice file
+	//	2E 73 6E 64	.snd	0	au, snd	Au audio file format
+	//	DB 0A CE 00		0		OpenGL Iris Perfomer .PFB (Performer Fast Binary)[94]
+	//	48 5a 4c 52 00 00 00 18	HZLR	0	hazelrules	Noodlesoft Hazel [95]
+	//	46 4C 68 64	FLhd	0	flp	FL Studio Project File
+	//	31 30 4C 46	10LF	0	flm	FL Studio Mobile Project File
+	//	52 4b 4d 43 32 31 30	RKMC210	0		Vormetric Encryption DPM Version 2.1 Header[96]
+	//	00 01 00 00 4D 53 49 53 41 4D 20 44 61 74 61 62 61 73 65	␀␁␀␀MSISAM Database	0	mny	Microsoft Money file
+	//	00 01 00 00 53 74 61 6E 64 61 72 64 20 41 43 45 20 44 42	␀␁␀␀Standard ACE DB	0	accdb	Microsoft Access 2007 Database
+	//	00 01 00 00 53 74 61 6E 64 61 72 64 20 4A 65 74 20 44 42	␀␁␀␀Standard Jet DB	0	mdb	Microsoft Access Database
+	//	01 FF 02 04 03 02	␁ÿ␂␄␃␂	0	drw	Micrografx vector graphic file
+	//	02 64 73 73	␂dss	0	dss	Digital Speech Standard (Olympus, Grundig, & Phillips) v2
+	//	03 64 73 73	␃dss	0	dss	Digital Speech Standard (Olympus, Grundig, & Phillips) v3
+	//	03 00 00 00 41 50 50 52	␃␀␀␀APPR	0	adx	Approach index file
+	//	06 06 ED F5 D8 1D 46 E5 BD 31 EF E7 FE 74 B7 1D	␆␆íõØ␝Få½1ïçþt·␝	0	indd	Adobe InDesign document
+	//	06 0E 2B 34 02 05 01 01 0D 01 02 01 01 02	␆␎+4␂␅␁␁␍␁␂␁␁␂	0-65535 (run-in)	mxf	Material Exchange Format file
+	//	07 53 4B 46	␇SKF	0	skf	SkinCrafter skin file
+	//	07 64 74 32 64 64 74 64	␇dt2ddtd	0	dtd	DesignTools 2D Design file
+	//	0A 16 6F 72 67 2E 62 69 74 63 6F 69 6E 2E 70 72	␊␖org.bitcoin.pr	0	wallet	MultiBit Bitcoin wallet file
+	//	0D 44 4F 43	␍DOC	0	doc	DeskMate Document file
+	//	0E 4E 65 72 6F 49 53 4F	␎NeroISO	0	nri	Nero CD Compilation
+	//	0E 57 4B 53	␎WKS	0	wks	DeskMate Worksheet
+	//	0F 53 49 42 45 4C 49 55 53	␏SIBELIUS	0	sib	Sibelius Music - Score file
+	//	23 20 4D 69 63 72 6F 73 6F 66 74 20 44 65 76 65 6C 6F 70 65 72 20 53 74 75 64 69 6F	# Microsoft Developer Studio	0	dsp	Microsoft Developer Studio project file
+	//	23 21 41 4D 52	#!AMR	0	amr	Adaptive Multi-Rate ACELP (Algebraic Code Excited Linear Prediction) Codec, commonly audio format with GSM cell phones.
+	//	23 21 53 49 4C 4B 0A	#!SILK␊	0	sil	Audio compression format developed by Skype
+	//	23 3F 52 41 44 49 41 4E 43 45 0A	#?RADIANCE␊	0	hdr	Radiance High Dynamic Range image file
+	//	23 40 7E 5E	#@~^	0	vbe	VBScript Encoded script
+	//	0D F0 1D C0	␍ð�À	0	cdb	MikroTik WinBox Connection Database (Address Book)
+	//	23 45 58 54 4D 33 55	#EXTM3U	0	m3u, m3u8 Multimedia playlist
+	//	6D 64 66 00	mdf␀	0	m	M2 Archive, used by game developer M2
+	//	4B 50 4B 41	KPKA	0	pak	Capcom RE Engine game data archives
+	//	41 52 43	ARC	0	arc	Capcom MT Framework game data archives
+	//	D0 4F 50 53	ÐOPS	0	pl	Interleaf PrinterLeaf / WorldView document format (now Broadvision QuickSilver)
+	//	6E 2B 31 00	n+1	344	nii	Single file NIfTI format, used extensively in biomedical imaging.
+	//	6E 69 31 00	ni1	344	hdr	Header file of a .hdr/.img pair in NIfTI format, used extensively in biomedical imaging.
+	//	52 41 46 36 34	RAF64	0		Report Builder file from Digital Metaphors
+	//	56 49 53 33	VIS3	0		Resource file Visionaire 3.x Engine
+	//	4D 53 48 7C 42 53 48 7C	MSH|BSH|	0	hl7	Health Level Seven (HL7) Standard for electronic data exchange [1]
+	//	70 77 72 64 61 74 61	pwrdata	0	pwrdata	SAP Power Monitor (version 1.1.0 and higher) data file
+	//	1a 08	..	0	arc	ARC archive file
+	//	2d 2d 2d 2d 2d 42 45 47 49 4e 20 50 47 50 20 50 55 42 4c 49 43 20 4b 45 49 20 42 4c 4f 43 4b 2d 2d 2d 2d 2d	-----BEGIN PGP PUBLIC KEY BLOCK-----	0	asc	Armored PGP public key
+	//	3a 42 61 73 65 20	:Base	0	cnt	Windows 3.x - Windows 95 Help Contents
+	//	52 49 46 46 ?? ?? ?? ?? 56 44 52 4d	RIFF????VDRM	0	vdr	VirtualDub
+	//	52 59 46 46 ?? ?? ?? ?? 54 52 49 44	RIFF????TRID	0	trd	TrID
+	//	52 49 46 46 ?? ?? ?? ?? 73 68 77 34	RIFF????shw4	0	shw	Corel SHOW! 4.0
+	//	52 49 46 46 ?? ?? ?? ?? 73 68 77 35	RIFF????shw5	0	shw	Corel SHOW! 5.0
+	//	52 49 46 46 ?? ?? ?? ?? 73 68 72 35	RIFF????shr5	0	shr	Corel SHOW! 5.0 player
+	//	52 49 46 46 ?? ?? ?? ?? 73 68 62 35	RIFF????shb5	0	shb	Corel SHOW! 5.0 background
+	//	52 49 46 46 ?? ?? ?? ?? 52 4d 4d 50	RIFF????RMMP	0	mmm	MacroMind Multimedia Movie or Microsoft Multimedia Movie
+	//	41 53 54 4d 2d 45 35 37	ASTM-E57	0	e57	ASTM E57 3D file format
+	//	aa aa aa aa	ªªªª	0	sys	Crowdstrike Channel File
+	//	8C 0A 00	Œ..	0	ucas	Unreal Engine Compressed Asset Storage file
+	//	2D 3D 3D 2D 2D 3D 3D 2D 2D 3D 3D 2D 2D 3D 3D 2D	-==--==--==--==-	0	utoc	Unreal Engine Table of Contents file
+	//	43 36 34 46 69 6C 65 00	C64File	0	P00 (P01, P02,...)	Commodore 64 binary file (source: *.P00 format for Power64 emulator)
 )
 
 type AnyBytesInMiddle struct {
