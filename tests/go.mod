@@ -5,7 +5,7 @@ go 1.23
 require (
 	github.com/stretchr/testify v1.9.0
 	github.com/usalko/hexsi v0.1.8
-	github.com/usalko/hexsi/internal v0.1.8
+	github.com/usalko/hexsi/ft v0.1.8
 )
 
 require (
@@ -16,5 +16,5 @@ require (
 
 replace (
 	github.com/usalko/hexsi => ../
-	github.com/usalko/hexsi/internal => ../internal
+	github.com/usalko/hexsi/ft => ../ft
 )

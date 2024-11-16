@@ -9,7 +9,7 @@ import (
     "fmt"
 
     "github.com/usalko/hexsi"
-    "github.com/usalko/hexsi/internal"
+    "github.com/usalko/hexsi/ft"
 )
 
 func main() {
@@ -19,7 +19,7 @@ func main() {
     }
 
     fmt.Printf("file type is %d", fileType)
-    if *fileType == internal.RAF64 {
+    if *fileType == ft.RAF64 {
         fmt.Print("correct detection")
     }
 }

@@ -79,11 +79,11 @@ if [ "$COMMAND" == "version" ]; then
         git push
         TAG_NAME="v$NEW_HEXSI_PACKAGE_VERSION"
         git tag "$TAG_NAME"
-        git tag "internal/$TAG_NAME"
+        git tag "ft/$TAG_NAME"
         git tag "tests/$TAG_NAME"
 
         git push origin tag "$TAG_NAME"
-        git push origin tag "internal/$TAG_NAME"
+        git push origin tag "ft/$TAG_NAME"
         git push origin tag "tests/$TAG_NAME"
 
     fi
