@@ -4,7 +4,7 @@ Packed and translated knowledge from [wiki](https://en.wikipedia.org/wiki/List_o
 
 Example of usage:
 
-```lang:go
+```go
 import (
     "fmt"
 
