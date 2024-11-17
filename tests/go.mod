@@ -4,8 +4,8 @@ go 1.23
 
 require (
 	github.com/stretchr/testify v1.9.0
-	github.com/usalko/hexsi v0.1.10
-	github.com/usalko/hexsi/ft v0.1.10
+	github.com/usalko/hexsi v0.1.11
+	github.com/usalko/hexsi/ft v0.1.11
 )
 
 require (
