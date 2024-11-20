@@ -1,10 +1,10 @@
-module github.com/usalko/hexsi
+module github.com/usalko/hexi
 
 go 1.23
 
-require github.com/usalko/hexsi/ft v0.1.11
+require github.com/usalko/hexi/ft v0.1.11
 
 replace (
-	github.com/usalko/hexsi/ft => ./ft
-	github.com/usalko/hexsi/tests => ./tests
+	github.com/usalko/hexi/ft => ./ft
+	github.com/usalko/hexi/tests => ./tests
 )

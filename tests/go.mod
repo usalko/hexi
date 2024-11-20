@@ -1,11 +1,11 @@
-module github.com/usalko/hexsi/tests
+module github.com/usalko/hexi/tests
 
 go 1.23
 
 require (
 	github.com/stretchr/testify v1.9.0
-	github.com/usalko/hexsi v0.1.11
-	github.com/usalko/hexsi/ft v0.1.11
+	github.com/usalko/hexi v0.1.11
+	github.com/usalko/hexi/ft v0.1.11
 )
 
 require (
@@ -15,6 +15,6 @@ require (
 )
 
 replace (
-	github.com/usalko/hexsi => ../
-	github.com/usalko/hexsi/ft => ../ft
+	github.com/usalko/hexi => ../
+	github.com/usalko/hexi/ft => ../ft
 )

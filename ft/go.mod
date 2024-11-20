@@ -1,4 +1,4 @@
-module github.com/usalko/hexsi/ft
+module github.com/usalko/hexi/ft
 
 go 1.23
 

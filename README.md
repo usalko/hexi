@@ -1,4 +1,4 @@
-# hexsi - just a database for hex file signatures
+# hexi - just a database for hex file signatures
 
 Packed and translated knowledge from [wiki](https://en.wikipedia.org/wiki/List_of_file_signatures)
 
@@ -8,12 +8,12 @@ Example of usage:
 import (
     "fmt"
 
-    "github.com/usalko/hexsi"
-    "github.com/usalko/hexsi/ft"
+    "github.com/usalko/hexi"
+    "github.com/usalko/hexi/ft"
 )
 
 func main() {
-    fileType, err := hexsi.DetectFileType([]byte{0x52, 0x41, 0x46, 0x36, 0x34})
+    fileType, err := hexi.DetectFileType([]byte{0x52, 0x41, 0x46, 0x36, 0x34})
     if err != nil {
         panic(err)
     }

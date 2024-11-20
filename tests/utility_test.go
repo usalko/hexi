@@ -5,8 +5,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/usalko/hexsi"
-	"github.com/usalko/hexsi/ft"
+	"github.com/usalko/hexi"
+	"github.com/usalko/hexi/ft"
 )
 
 func TestSliceMutation(t *testing.T) {
@@ -14,7 +14,7 @@ func TestSliceMutation(t *testing.T) {
 	initialCapacity := cap(header)
 	initialLength := len(header)
 
-	fileType, err := hexsi.DetectFileType(header)
+	fileType, err := hexi.DetectFileType(header)
 	check(err)
 
 	assert.Equal(t, *fileType, ft.GZIP)

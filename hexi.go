@@ -1,9 +1,9 @@
-package hexsi
+package hexi
 
 import (
 	"fmt"
 
-	"github.com/usalko/hexsi/ft"
+	"github.com/usalko/hexi/ft"
 )
 
 func DetectFileType(header []byte) (*ft.FileType, error) {
