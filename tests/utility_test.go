@@ -1,6 +1,7 @@
 package tests
 
 import (
+	"slices"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -20,4 +21,14 @@ func TestSliceMutation(t *testing.T) {
 
 	assert.Equal(t, initialCapacity, cap(header))
 	assert.Equal(t, initialLength, len(header))
+}
+
+func TestNotEmptyStrings(t *testing.T) {
+	strings := []string{"", "Hex", "Si"}
+	assert.True(t,
+		slices.Equal(
+			slices.Collect(ft.NotEmptyStrings(strings)),
+			[]string{"Hex", "Si"},
+		),
+	)
 }

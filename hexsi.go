@@ -73,3 +73,12 @@ func DetectFileType(header []byte) (*ft.FileType, error) {
 	}
 	return nil, fmt.Errorf("unknown file type")
 }
+
+// Return short name of given file type
+func FileTypeShortName(fileType ft.FileType) string {
+	fileTypeDescription, err := ft.GetFileTypeDescription(fileType)
+	if err != nil {
+		return ""
+	}
+	return fileTypeDescription.ShortName
+}

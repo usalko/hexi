@@ -1457,14 +1457,14 @@ var knownSignatures01 = map[FileType]HexSignature[[]byte, uint64, string]{
 		Bytes:         []byte{0x44, 0x52, 0x41, 0x43, 0x4F},
 		Offset:        0,
 		NameExtension: "drc",
-		Description:   "3D model compressed with Google Draco[86]",
+		Description:   "3D model compressed with Google Draco",
 		Tag:           DRACO,
 	},
 	BLENDER: {
 		Bytes:         []byte{0x42, 0x4C, 0x45, 0x4E, 0x44, 0x45, 0x52},
 		Offset:        0,
 		NameExtension: "blend",
-		Description:   "Blender File Format[88]",
+		Description:   "Blender File Format",
 		Tag:           BLENDER,
 	},
 	OTF: {
